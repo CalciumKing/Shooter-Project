@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fc35c02723fa5f469de0e0e2018cf67, type: 3}
+  m_Name: Player Stats
+  m_EditorClassIdentifier: Assembly-CSharp::NewBehaviourScript
+  currentWeapon: {fileID: 8426396110273374082, guid: 824a081ecac539847abe5024aadd9c47, type: 3}
+  currentInsta: {fileID: 0}
+  xp: 120
+  levelInterval: 150
+  level: 2
+  currentHealth: 50
+  maxHealth: 100
+  spawnPos: {x: -36.8, y: 9.8, z: 18.82}
