@@ -11,6 +11,8 @@ public class Keys : ScriptableObject {
     [SerializeField] public KeyCode reload = KeyCode.R;
     [SerializeField] public KeyCode jump = KeyCode.Space;
     [SerializeField] public KeyCode crouch = KeyCode.LeftControl;
+    [SerializeField] public KeyCode throwable = KeyCode.Q;
+    [SerializeField] public KeyCode heal = KeyCode.X;
 
     [Header("Mouse/Look Sens")]
     [SerializeField] public KeyCode fire = KeyCode.Mouse0;

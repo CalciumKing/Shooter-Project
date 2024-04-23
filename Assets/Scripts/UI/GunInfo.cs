@@ -15,7 +15,6 @@ public class GunInfo : MonoBehaviour {
     public TextMeshProUGUI typeText, ammoText;
 
     [Header("Ammo Animations")]
-    private Coroutine drainAmmoCoroutine;
     public Gradient ammoGradient;
     private Color targetColor;
     private float timeToDrain = .2f, targetAmmo = 1;
@@ -66,7 +65,7 @@ public class GunInfo : MonoBehaviour {
 
     public void UpdateAmmoBar(float maxHealth, float currentHealth) {
         targetAmmo = currentHealth / maxHealth;
-        drainAmmoCoroutine = StartCoroutine(ReduceAmmo());
+        StartCoroutine(ReduceAmmo());
         targetColor = ammoGradient.Evaluate(targetAmmo);
     }
     private IEnumerator ReduceAmmo() {

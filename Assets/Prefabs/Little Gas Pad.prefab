@@ -190,6 +190,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gas Tank 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1607793125785285791, guid: 845771c8faf6ff848a08dc9973e39f41, type: 3}
+      propertyPath: m_TagString
+      value: Gas Tank
+      objectReference: {fileID: 0}
     - target: {fileID: 2097507515046522405, guid: 845771c8faf6ff848a08dc9973e39f41, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -274,6 +278,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26f1715b17a0064995ba7f67e1371fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ps: {fileID: 11400000, guid: d74df52f97e75f74380a491d6e84e0df, type: 2}
   damageAmount: 10
   damageDistance: 5

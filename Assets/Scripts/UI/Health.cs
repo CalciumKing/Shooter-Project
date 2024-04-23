@@ -12,7 +12,6 @@ public class Health : MonoBehaviour {
     public TextMeshProUGUI text;
 
     [Header("Health Animations")]
-    private Coroutine drainedHealthBarCoroutine;
     public Gradient healthGradient;
     private Color targetColor;
     private float timeToDrain = .25f, targetHealth = 1;
@@ -39,7 +38,7 @@ public class Health : MonoBehaviour {
 
     public void UpdateHealthBar(float maxHealth, float currentHealth) {
         targetHealth = currentHealth / maxHealth;
-        drainedHealthBarCoroutine = StartCoroutine(DrainHealth());
+        StartCoroutine(DrainHealth());
         targetColor = healthGradient.Evaluate(targetHealth);
     }
     private IEnumerator DrainHealth() {

@@ -250,6 +250,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gas Tank 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6855456404778989077, guid: ab3787f757082314fb65fb7ca4552c31, type: 3}
+      propertyPath: m_TagString
+      value: Gas Tank
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab3787f757082314fb65fb7ca4552c31, type: 3}
 --- !u!1 &4806703772970093919 stripped
@@ -285,7 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26f1715b17a0064995ba7f67e1371fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ps: {fileID: 11400000, guid: d74df52f97e75f74380a491d6e84e0df, type: 2}
   damageAmount: 20
   damageDistance: 10
 --- !u!4 &5331988394268022757 stripped

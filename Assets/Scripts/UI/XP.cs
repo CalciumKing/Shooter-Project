@@ -10,7 +10,6 @@ public class XP : MonoBehaviour {
     private int currentXP;
 
     [Header("XP Animations")]
-    private Coroutine increaseXPCoroutine;
     private float timeToIncrease = .25f, targetXP = 1;
 
     private void Awake() { image = GetComponent<Image>(); }
@@ -31,7 +30,7 @@ public class XP : MonoBehaviour {
 
     public void UpdateXP(float maxXP, float currentXP) {
         targetXP = currentXP / maxXP;
-        increaseXPCoroutine = StartCoroutine(DrainHealth());
+        StartCoroutine(DrainHealth());
     }
     private IEnumerator DrainHealth() {
         float fillAmount = image.fillAmount;
