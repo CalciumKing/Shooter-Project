@@ -15,11 +15,7 @@ public class Grenade : GasTank {
             Explode(true);
     }
     private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Enemy Bullet" || other.gameObject.tag == "Player Bullet") {
-
-            // EXPLOSION EFFECT
-
+        if (other.gameObject.tag == "Enemy Bullet" || other.gameObject.tag == "Player Bullet")
             Explode(true);
-        }
     }
 }

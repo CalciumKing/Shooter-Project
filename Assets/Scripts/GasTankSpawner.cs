@@ -17,6 +17,7 @@ public class GasTankSpawner : MonoBehaviour {
                 gasTank.transform.position = gasSpawnPos.position;
                 gasTank.transform.rotation = gasSpawnPos.rotation;
                 gasTank.SetActive(true);
+                gasTank.GetComponent<GasTank>().exploded = false;
             }
         }
     }

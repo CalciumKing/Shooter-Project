@@ -11,6 +11,7 @@ public class OtherKeys : MonoBehaviour {
     public bool canThrow;
     public float throwTimer;
     public float throwCooldown;
+    public Transform throwPos;
 
     [Header("Healing")]
     public bool canHeal;
@@ -25,8 +26,8 @@ public class OtherKeys : MonoBehaviour {
     private void Update() {
         if (canThrow) {
             if (Input.GetKeyDown(k.throwable)) {
-                Instantiate(throwItem, transform.position, Quaternion.identity);
-                throwItem.GetComponent<Rigidbody>().AddForce(transform.forward * throwForce, ForceMode.Impulse);
+                Instantiate(throwItem, throwPos.position, Quaternion.identity);
+                throwItem.GetComponent<Rigidbody>().AddForce(transform.forward * throwForce + transform.up * throwForce, ForceMode.Impulse);
                 canThrow = false;
             }
         } else {
