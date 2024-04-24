@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class Screens : MonoBehaviour {
     private PlayerStats ps;
-    public GameObject loseScreen;
+    private OtherKeys ok;
+    [SerializeField] GameObject loseScreen;
 
     [Header("Player")]
-    public Transform player;
-    public Transform playerSpawnPos;
-    public GunStats[] weapons;
+    [SerializeField] Transform player;
+    [SerializeField] Transform playerSpawnPos;
+    [SerializeField] GunStats[] weapons;
 
     private void Start() {
         ps = GameManager.i.ps;
+        ok = player.GetComponent<OtherKeys>();
     }
     public void Death() {
         loseScreen.SetActive(true);
@@ -21,6 +23,8 @@ public class Screens : MonoBehaviour {
     public void Restart() {
         player.position = playerSpawnPos.position;
         ps.currentHealth = ps.maxHealth;
+
+        ok.Respawn();
 
         foreach (GunStats weapon in weapons)
             weapon.currentAmmo = weapon.maxAmmo;

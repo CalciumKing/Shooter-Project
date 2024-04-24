@@ -1,8 +1,8 @@
 using UnityEngine;
 
 public class Grenade : GasTank {
-    public float cooldown = 5f;
-    public float timer;
+    [SerializeField] float cooldown = 5f;
+    [SerializeField] float timer;
 
     private void Start() {
         ps = GameManager.i.ps;

@@ -6,28 +6,30 @@ public class OtherKeys : MonoBehaviour {
     public Cooldowns cd;
 
     [Header("Throwing")]
-    public GameObject throwItem;
-    public int throwForce;
-    public bool canThrow;
-    public float throwTimer;
-    public float throwCooldown;
-    public Transform throwPos;
+    [SerializeField] GameObject throwItem;
+    [SerializeField] Transform throwPos;
+    [SerializeField] int throwForce;
+    [SerializeField] float throwTimer;
+    [SerializeField] float throwCooldown;
+    private Camera cam;
+    private bool canThrow;
 
     [Header("Healing")]
-    public bool canHeal;
-    public float healTimer;
-    public float healCooldown;
-    public int healAmount;
+    [SerializeField] float healTimer;
+    [SerializeField] float healCooldown;
+    [SerializeField] int healAmount;
+    private bool canHeal;
 
     private void Start() {
         ps = GameManager.i.ps;
         k = GameManager.i.k;
+        cam = Camera.main;
     }
     private void Update() {
         if (canThrow) {
             if (Input.GetKeyDown(k.throwable)) {
-                Instantiate(throwItem, throwPos.position, Quaternion.identity);
-                throwItem.GetComponent<Rigidbody>().AddForce(transform.forward * throwForce + transform.up * throwForce, ForceMode.Impulse);
+                GameObject proj = Instantiate(throwItem, throwPos.position, Quaternion.identity);
+                proj.GetComponent<Rigidbody>().AddForce(cam.transform.forward * throwForce, ForceMode.Impulse);
                 canThrow = false;
             }
         } else {
@@ -53,5 +55,15 @@ public class OtherKeys : MonoBehaviour {
                 healTimer = healCooldown;
             }
         }
+    }
+    public void Respawn() {
+        cd.UpdateHealCooldown(healCooldown, 0);
+        canHeal = true;
+        healTimer = healCooldown;
+        cd.healImage.fillAmount = 0;
+        cd.UpdateThrowCooldown(throwCooldown, 0);
+        canThrow = true;
+        throwTimer = throwCooldown;
+        cd.throwableImage.fillAmount = 0;
     }
 }

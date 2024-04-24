@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 201879167}
   - component: {fileID: 201879168}
   m_Layer: 5
-  m_Name: Screens
+  m_Name: Screens Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1128,7 +1128,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.312
+  m_FillAmount: 0.2
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1289,11 +1289,6 @@ Transform:
   m_Father: {fileID: 113196422}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &328583542 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1442164641956420754, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-  m_PrefabInstance: {fileID: 594389252}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &360889968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1670,78 +1665,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1971616925}
     m_Modifications:
-    - target: {fileID: 1442164641628850759, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: m_IsTrigger
+    - target: {fileID: 1223748607, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
+      propertyPath: cd
+      value: 
+      objectReference: {fileID: 1934801844}
+    - target: {fileID: 1223748607, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
+      propertyPath: throwPos
+      value: 
+      objectReference: {fileID: 733424537}
+    - target: {fileID: 1223748607, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
+      propertyPath: healTimer
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1442164641628851641, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: m_TagString
-      value: Player
+    - target: {fileID: 1223748607, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
+      propertyPath: throwItem
+      value: 
+      objectReference: {fileID: 505866037948214943, guid: 6f5d79a0c79f37c4e8e9537aac5a7262, type: 3}
+    - target: {fileID: 1223748607, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
+      propertyPath: throwForce
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223748607, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
+      propertyPath: throwTimer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223748607, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
+      propertyPath: throwCooldown
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1442164641956420754, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: mc
-      value: 
-      objectReference: {fileID: 963194228}
-    - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: pistol
-      value: 
-      objectReference: {fileID: 264067916907182156, guid: 15bf0d588bb037c459e8485f65ad986f, type: 3}
-    - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: machineGun
-      value: 
-      objectReference: {fileID: 8380769455003715722, guid: 82ad33fdf0174154aa5dd2102a4c0573, type: 3}
-    - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
       propertyPath: weaponHolder
       value: 
       objectReference: {fileID: 1809744762}
-    - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: guns.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: guns.Array.data[0]
-      value: 
-      objectReference: {fileID: 8380769455003715722, guid: 82ad33fdf0174154aa5dd2102a4c0573, type: 3}
-    - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: guns.Array.data[1]
-      value: 
-      objectReference: {fileID: 1812816432829657574, guid: fe5ed2e5efe2b8047b0c080b8373e7f5, type: 3}
-    - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: guns.Array.data[2]
-      value: 
-      objectReference: {fileID: 264067916907182156, guid: 15bf0d588bb037c459e8485f65ad986f, type: 3}
-    - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: guns.Array.data[3]
-      value: 
-      objectReference: {fileID: 8426396110273374082, guid: 824a081ecac539847abe5024aadd9c47, type: 3}
-    - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: guns.Array.data[4]
-      value: 
-      objectReference: {fileID: 3524295934362598614, guid: f1934d0715948b54d83e420685e0d87b, type: 3}
-    - target: {fileID: 1442164641956420760, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: guns.Array.data[5]
-      value: 
-      objectReference: {fileID: 5583900874407409141, guid: b52a2a857d903434facf521b55ad8bfd, type: 3}
     - target: {fileID: 1442164641956420761, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
       propertyPath: mc
       value: 
       objectReference: {fileID: 963194228}
     - target: {fileID: 1442164641956420765, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: ps
-      value: 
-      objectReference: {fileID: 11400000, guid: d74df52f97e75f74380a491d6e84e0df, type: 2}
-    - target: {fileID: 1442164641956420765, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
       propertyPath: playerSpawn
       value: 
       objectReference: {fileID: 308492291}
-    - target: {fileID: 1442164641956420765, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
-      propertyPath: fallDamageMultiplier
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 1442164641956420766, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2166,6 +2133,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727543179}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &733424536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 733424537}
+  m_Layer: 0
+  m_Name: Throwable Spawn Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &733424537
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733424536}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 963194228}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &736830379 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5041056655058751746, guid: bd4976bd6e67e29428566a108f6868ab, type: 3}
@@ -2875,6 +2873,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1809744762}
+  - {fileID: 733424537}
   m_Father: {fileID: 1656350583}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3053,28 +3052,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1442164641956420766, guid: 5c253754d3c49fb4ca1885a5f9841e4e, type: 3}
   m_PrefabInstance: {fileID: 594389252}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1223748607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328583542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 380a6b54ffa9d7941a8466b33a4860f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cd: {fileID: 1934801844}
-  throwItem: {fileID: 7682948299845589924, guid: cb7f3abfb0095324fa75b94d1162b7f1, type: 3}
-  throwForce: 1000
-  canThrow: 1
-  throwTimer: 5
-  throwCooldown: 5
-  canHeal: 1
-  healTimer: 5
-  healCooldown: 5
-  healAmount: 15
 --- !u!1 &1230742394
 GameObject:
   m_ObjectHideFlags: 0
