@@ -3,18 +3,17 @@ using UnityEngine;
 public class Gun : MonoBehaviour {
     [Header("References")]
     private Keys k;
-    public GunStats gs;
-    public GameObject bullet;
-    public Camera mc;
+    [SerializeField] GunStats gs;
+    [SerializeField] GameObject bullet;
 
     [Header("Shooting")]
-    public float cooldown, timer;
-    public bool canShoot = true;
-    public bool usingPistol = false;
+    [SerializeField] float cooldown;
+    [SerializeField] float timer;
+    [SerializeField] bool canShoot = true;
+    [SerializeField] bool usingPistol = false;
 
     private void Start() {
         timer = cooldown;
-        mc = Camera.main;
         k = GameManager.i.k;
     }
     private void Update() {

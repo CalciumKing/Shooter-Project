@@ -8,13 +8,13 @@ public class PlayerStats : ScriptableObject {
     public KeyCode currentGunKey;
 
     [Header("XP")]
-    [SerializeField] public int xp;
-    [SerializeField] public int levelInterval;
-    [SerializeField] public int level;
+    public int xp;
+    public int levelInterval;
+    public int level;
 
     [Header("Health")]
-    [SerializeField] public int currentHealth;
-    [SerializeField] public int maxHealth;
+    public int currentHealth;
+    public int maxHealth;
 
     [Header("Spawn Info")]
     public Vector3 spawnPos;

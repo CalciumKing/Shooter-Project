@@ -19,8 +19,9 @@ public class Bullet : MonoBehaviour {
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Enemy" && gameObject.tag == "Player Bullet")
             other.gameObject.GetComponent<Enemy>().takeDamage(damage);
-        else if (other.gameObject.tag == "Player" && gameObject.tag == "Enemy Bullet")
+        else if (other.gameObject.tag == "Player" && gameObject.tag == "Enemy Bullet") {
             ps.currentHealth -= damage;
+        }
         Destroy(gameObject);
     }
 }

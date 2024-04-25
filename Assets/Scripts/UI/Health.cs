@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour {
     [Header("References")]
-    public PlayerStats ps;
-    public Screens s;
+    [SerializeField] PlayerStats ps;
+    [SerializeField] Screens s;
     private Image image;
     private int currentHealth;
-    public TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI text;
 
     [Header("Health Animations")]
-    public Gradient healthGradient;
+    [SerializeField] Image[] screens;
+    [SerializeField] Gradient healthGradient;
     private Color targetColor;
     private float timeToDrain = .25f, targetHealth = 1;
 
@@ -23,6 +24,11 @@ public class Health : MonoBehaviour {
     }
     private void Update() {
         if (currentHealth != ps.currentHealth) {
+            if (currentHealth > ps.currentHealth)
+                screens[0].gameObject.SetActive(true);
+            else if (currentHealth < ps.currentHealth)
+                screens[1].gameObject.SetActive(true);
+
             UpdateHealthBar(ps.maxHealth, ps.currentHealth);
             currentHealth = ps.currentHealth;
         }
@@ -35,7 +41,6 @@ public class Health : MonoBehaviour {
 
         text.text = ps.currentHealth + " / " + ps.maxHealth;
     }
-
     public void UpdateHealthBar(float maxHealth, float currentHealth) {
         targetHealth = currentHealth / maxHealth;
         StartCoroutine(DrainHealth());
@@ -51,5 +56,8 @@ public class Health : MonoBehaviour {
             image.color = Color.Lerp(currentColor, targetColor, (elapsedTime / timeToDrain));
             yield return null;
         }
+
+        foreach (Image screen in screens)
+            screen.gameObject.SetActive(false);
     }
 }

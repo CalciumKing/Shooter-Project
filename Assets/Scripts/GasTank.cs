@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class GasTank : MonoBehaviour {
     protected PlayerStats ps;
-    [SerializeField] private int damageAmount;
-    [SerializeField] private int damageDistance;
+    [SerializeField] int damageAmount;
+    [SerializeField] int damageDistance;
     public bool exploded = false;
+    [SerializeField] ParticleSystem explosionPrefab;
+    private ParticleSystem explosionInstance;
 
     private void Start() { ps = GameManager.i.ps; }
     private void OnCollisionEnter(Collision other) {
@@ -19,7 +21,7 @@ public class GasTank : MonoBehaviour {
 
         exploded = true;
 
-        // EXPLOSION EFFECT
+        explosionInstance = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         if (Vector3.Distance(player.position, transform.position) <= damageDistance)
             ps.currentHealth -= damageAmount;

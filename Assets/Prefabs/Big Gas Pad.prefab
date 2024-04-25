@@ -291,6 +291,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 20
   damageDistance: 10
+  exploded: 0
+  explosionPrefab: {fileID: 5846812597070804646, guid: b1f38b8760136834f9673ff275a77616, type: 3}
 --- !u!4 &5331988394268022757 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6082298127282826415, guid: ab3787f757082314fb65fb7ca4552c31, type: 3}

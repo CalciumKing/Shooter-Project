@@ -130,5 +130,6 @@ MonoBehaviour:
   damageAmount: 30
   damageDistance: 10
   exploded: 0
-  cooldown: 5
+  explosionPrefab: {fileID: 5846812597070804646, guid: b1f38b8760136834f9673ff275a77616, type: 3}
   timer: 5
+  cooldown: 5

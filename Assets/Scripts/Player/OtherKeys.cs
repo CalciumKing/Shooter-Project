@@ -3,7 +3,7 @@ using UnityEngine;
 public class OtherKeys : MonoBehaviour {
     private PlayerStats ps;
     private Keys k;
-    public Cooldowns cd;
+    [SerializeField] Cooldowns cd;
 
     [Header("Throwing")]
     [SerializeField] GameObject throwItem;
