@@ -4,9 +4,12 @@ public class Bullet : MonoBehaviour {
     private PlayerStats ps;
     [SerializeField] int speed = 40;
     [SerializeField] int damage;
+    [SerializeField] bool shot;
+    [SerializeField] Grenade grenade;
 
     [Header("Timer")]
     public float timer = 10f;
+    public float shotTimer = 1f;
 
     private void Start() { ps = GameManager.i.ps; }
     void Update() {
@@ -15,12 +18,27 @@ public class Bullet : MonoBehaviour {
             timer -= Time.deltaTime;
         else
             Destroy(gameObject);
+        if (shot)
+        {
+            if (timer > 0)
+                shotTimer -= Time.deltaTime;
+            else
+                grenade.Explode(true);
+        }
     }
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Enemy" && gameObject.tag == "Player Bullet")
             other.gameObject.GetComponent<Enemy>().takeDamage(damage);
-        else if (other.gameObject.tag == "Player" && gameObject.tag == "Enemy Bullet") {
+        else if (other.gameObject.tag == "Player" && gameObject.tag == "Enemy Bullet")
             ps.currentHealth -= damage;
+
+        else if(other.gameObject.tag == "Gas Tank")
+            other.gameObject.GetComponent<GasTank>().Explode(false);
+        else if (other.gameObject.tag == "Grenade")
+        {
+            grenade = other.gameObject.GetComponent<Grenade>();
+            grenade.ExplodeEffect();
+            shot = true;
         }
         Destroy(gameObject);
     }

@@ -5,23 +5,16 @@ public class GasTank : MonoBehaviour {
     [SerializeField] int damageAmount;
     [SerializeField] int damageDistance;
     public bool exploded = false;
-    [SerializeField] ParticleSystem explosionPrefab;
-    private ParticleSystem explosionInstance;
+    [SerializeField] ParticleSystem explosion;
 
     private void Start() { ps = GameManager.i.ps; }
-    private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Enemy Bullet" || other.gameObject.tag == "Player Bullet")
-            Explode(false);
-    }
-    protected void Explode(bool destroyAfter) {
+    public void Explode(bool destroyAfter) {
         Transform player = GameObject.FindGameObjectWithTag("Player").transform;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject[] gasTanks = GameObject.FindGameObjectsWithTag("Gas Tank");
         GameObject[] grenades = GameObject.FindGameObjectsWithTag("Grenade");
 
         exploded = true;
-
-        explosionInstance = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         if (Vector3.Distance(player.position, transform.position) <= damageDistance)
             ps.currentHealth -= damageAmount;
@@ -39,7 +32,10 @@ public class GasTank : MonoBehaviour {
                     grenade.GetComponent<Grenade>().Explode(true);
 
         if (!destroyAfter)
+        {
+            explosion.Play();
             gameObject.SetActive(false);
+        }
         else
             Destroy(gameObject);
     }
