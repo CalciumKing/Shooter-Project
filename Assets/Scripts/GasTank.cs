@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class GasTank : MonoBehaviour {
     protected PlayerStats ps;
-    [SerializeField] int damageAmount;
-    [SerializeField] int damageDistance;
+    [SerializeField] int damageAmount, damageDistance;
     public bool exploded = false;
     [SerializeField] ParticleSystem explosion;
 
@@ -28,15 +27,16 @@ public class GasTank : MonoBehaviour {
                     tank.GetComponent<GasTank>().Explode(false);
         foreach (GameObject grenade in grenades)
             if (Vector3.Distance(grenade.transform.position, transform.position) <= damageDistance)
-                if(!grenade.GetComponent<Grenade>().exploded)
-                    grenade.GetComponent<Grenade>().Explode(true);
+                if (!grenade.GetComponent<Grenade>().exploded) {
+                    Grenade grenadeComponent = grenade.GetComponent<Grenade>();
+                    grenadeComponent.timer = .1f;
+                    grenadeComponent.Explode(true);
+                }
 
-        if (!destroyAfter)
-        {
+        if (!destroyAfter) {
             explosion.Play();
             gameObject.SetActive(false);
-        }
-        else
+        } else
             Destroy(gameObject);
     }
 }

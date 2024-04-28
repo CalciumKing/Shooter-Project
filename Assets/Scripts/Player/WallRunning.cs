@@ -4,18 +4,21 @@ public class WallRunning : MonoBehaviour {
     private Keys k;
     private PlayerMovement pm;
     private Rigidbody rb;
-    public Transform mc;
+    [SerializeField] Transform mc;
+    [SerializeField] Transform cameraHolder;
 
     [Header("Wallrunning")]
-    public LayerMask whatIsWall;
-    public LayerMask whatIsGround;
-    public float wallRunForce;
+    [SerializeField] LayerMask whatIsWall;
+    [SerializeField] LayerMask whatIsGround;
+    [SerializeField] float wallRunForce;
+    public float timer, cooldown;
 
     [Header("Detection")]
-    public float wallCheckDistance;
-    public float minJumpHeight;
+    [SerializeField] float wallCheckDistance;
+    [SerializeField] float minJumpHeight;
     private RaycastHit leftWallHit, rightWallHit;
-    private bool wallLeft, wallRight;
+    private bool wallLeft, wallRight, wallForward, ceilingAbove;
+    public bool playerFlipped = false;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -23,10 +26,14 @@ public class WallRunning : MonoBehaviour {
     }
     private void Start() {
         k = GameManager.i.k;
+        ResetPlayerCeilingRunning();
     }
     private void Update() {
         CheckForWall();
         StateMachine();
+
+        if (timer > 0)
+            timer -= Time.deltaTime;
     }
     private void FixedUpdate() {
         if (pm.wallRunning) {
@@ -34,27 +41,36 @@ public class WallRunning : MonoBehaviour {
             pm.hasDoubleJumped = false;
             if (Input.GetKey(k.jump))
                 pm.Jump();
-        }
+        } else if (playerFlipped)
+            rb.AddForce(-Physics.gravity * rb.mass, ForceMode.Force);
     }
 
     private void CheckForWall() {
         wallRight = Physics.Raycast(transform.position, pm.orientation.right, out rightWallHit, wallCheckDistance, whatIsWall);
         wallLeft = Physics.Raycast(transform.position, -pm.orientation.right, out leftWallHit, wallCheckDistance, whatIsWall);
+        wallForward = Physics.Raycast(transform.position, pm.orientation.forward, wallCheckDistance, whatIsWall);
+        ceilingAbove = Physics.Raycast(transform.position, pm.orientation.up, wallCheckDistance * 2, whatIsGround);
     }
     private bool AboveGround() { return !Physics.Raycast(transform.position, Vector3.down, minJumpHeight, whatIsGround); }
 
     private void StateMachine() {
-        if ((wallLeft || wallRight) && pm.verticalInput > 0 && AboveGround())
+        if ((wallLeft || wallRight) && AboveGround() || wallForward) {
+            if (playerFlipped)
+                ResetPlayerCeilingRunning();
             StartWallRun();
-        else {
-            if (pm.wallRunning) {
+        } else
+            if (pm.wallRunning)
                 StopWallRun();
-            }
-        }
+
+        if (ceilingAbove && !playerFlipped && (timer <= 0 || wallForward)) {
+            cameraHolder.localRotation = Quaternion.Euler(cameraHolder.rotation.x, cameraHolder.rotation.y, 180);
+            playerFlipped = true;
+        } else if (!ceilingAbove && playerFlipped && !pm.grounded)
+            ResetPlayerCeilingRunning();
     }
 
     private void StartWallRun() {
-        if (!pm.wallRunning){
+        if (!pm.wallRunning) {
             pm.wallRunning = true;
             if (wallRight)
                 mc.GetComponent<PlayerCam>().Tilt(15);
@@ -72,14 +88,23 @@ public class WallRunning : MonoBehaviour {
         if ((pm.orientation.forward - wallForward).magnitude > (pm.orientation.forward - -wallForward).magnitude)
             wallForward = -wallForward;
 
-        rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
+        if (pm.verticalInput > 0) {
+            rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
+            if (!(wallLeft && pm.horizontalInput > 0) && !(wallRight && pm.horizontalInput < 0))
+                rb.AddForce(-wallNormal * 100, ForceMode.Force);
+        } else
+            rb.velocity = Vector3.zero;
 
-        if (!(wallLeft && pm.horizontalInput > 0) && !(wallRight && pm.horizontalInput < 0))
-            rb.AddForce(-wallNormal * 100, ForceMode.Force);
     }
     private void StopWallRun() {
         pm.wallRunning = false;
         rb.useGravity = true;
         mc.GetComponent<PlayerCam>().Tilt(0);
+    }
+    public void ResetPlayerCeilingRunning() {
+        timer = cooldown;
+        playerFlipped = false;
+        cameraHolder.localRotation = Quaternion.Euler(cameraHolder.rotation.x, cameraHolder.rotation.y, 0);
+        rb.AddForce(Physics.gravity * rb.mass);
     }
 }

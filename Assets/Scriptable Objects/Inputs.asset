@@ -18,7 +18,11 @@ MonoBehaviour:
   reload: 114
   jump: 32
   crouch: 306
+  throwable: 113
+  heal: 120
   fire: 323
   aim: 324
   xSense: 4
   ySense: 4
+  scopeXSense: 1
+  scopeYSense: 1

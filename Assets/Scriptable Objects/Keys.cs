@@ -21,4 +21,8 @@ public class Keys : ScriptableObject {
     public int xSense;
     [Range(1, 10)]
     public int ySense;
+    [Range(1, 10)]
+    public int scopeXSense;
+    [Range(1, 10)]
+    public int scopeYSense;
 }

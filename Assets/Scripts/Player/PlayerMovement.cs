@@ -6,32 +6,35 @@ public class PlayerMovement : MonoBehaviour {
     private Keys k;
     private Rigidbody rb;
     private Sliding s;
+    private WallRunning wr;
     public Transform orientation, playerSpawn;
     public float horizontalInput, verticalInput;
     private Vector3 moveDirection;
 
     [Header("Jumping")]
     [SerializeField] float airMultiplier;
-    public float jumpForce;
+    [SerializeField] float jumpForce;
     public bool grounded, readyToJump, hasDoubleJumped, crouchInAir;
-    public float groundDrag, playerHeight;
-    public LayerMask whatIsGround;
+    [SerializeField] float groundDrag, playerHeight;
+    [SerializeField] LayerMask whatIsGround;
 
     [Header("Falling")]
-    public float fallTime;
-    public int fallDamageMultiplier;
-    public Vector3 startJump, endJump;
+    private float fallTime;
+    [SerializeField] int fallDamageMultiplier;
+    private Vector3 startJump, endJump;
 
     [Header("Speed")]
-    public bool crouched;
+    [SerializeField] bool crouched;
     public bool wallRunning;
     public float wallRunSpeed, moveSpeed, crouchSpeed, walkSpeed, runSpeed;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
         s = GetComponent<Sliding>();
+        wr = GetComponent<WallRunning>();
     }
     private void Start() {
+        Physics.gravity = new Vector3(0, -10, 0);
         ps = GameManager.i.ps;
         k = GameManager.i.k;
         moveSpeed = walkSpeed;
@@ -40,12 +43,20 @@ public class PlayerMovement : MonoBehaviour {
         playerSpawn.position = ps.spawnPos;
     }
     private void Update() {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        if (!wr.playerFlipped) {
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+        } else {
+            grounded = Physics.Raycast(transform.position, Vector3.up, playerHeight * 0.5f + 0.2f, whatIsGround);
+            horizontalInput = -Input.GetAxisRaw("Horizontal");
+        }
         verticalInput = Input.GetAxisRaw("Vertical");
 
         if (Input.GetKeyDown(k.jump)) {
             if (readyToJump && grounded) {
+                if (wr.playerFlipped)
+                    wr.ResetPlayerCeilingRunning();
+
                 startJump = transform.position;
                 Jump();
                 readyToJump = false;
@@ -54,9 +65,12 @@ public class PlayerMovement : MonoBehaviour {
                 hasDoubleJumped = true;
                 Jump();
             }
-        } else if (Input.GetKeyDown(k.crouch))
-            crouched = true;
-        else if (Input.GetKeyUp(k.crouch))
+        } else if (Input.GetKey(k.crouch)) {
+            if (wallRunning)
+                rb.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
+            else
+                crouched = true;
+        } else if (Input.GetKeyUp(k.crouch) && crouched)
             crouched = false;
 
         if (crouched && grounded && !s.sliding)
@@ -75,9 +89,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void DragController() {
-        if (grounded) {
+        if (grounded)
             rb.drag = groundDrag;
-        } else {
+        else {
             rb.drag = 0;
             if (Input.GetKey(k.crouch) && !crouchInAir) {
                 rb.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
@@ -114,7 +128,10 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Jump() {
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        if (!wr.playerFlipped)
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        else
+            rb.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
     }
     private void ResetJump() { readyToJump = true; }
 }
