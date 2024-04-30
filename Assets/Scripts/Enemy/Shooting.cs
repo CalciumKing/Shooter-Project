@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Shooting : MonoBehaviour {
     private Pathfinding pf;
-    public GameObject bullet;
+    [SerializeField] GameObject bullet;
 
     [Header("Shooting")]
     public bool canShoot;

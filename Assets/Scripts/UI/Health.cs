@@ -39,7 +39,7 @@ public class Health : MonoBehaviour {
             s.Death();
         }
 
-        text.text = ps.currentHealth + " / " + ps.maxHealth;
+        text.text = $"{ps.currentHealth} / {ps.maxHealth}";
     }
     public void UpdateHealthBar(float maxHealth, float currentHealth) {
         targetHealth = currentHealth / maxHealth;

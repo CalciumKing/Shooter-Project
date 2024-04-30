@@ -5,6 +5,7 @@ public class GasTank : MonoBehaviour {
     [SerializeField] int damageAmount, damageDistance;
     public bool exploded = false;
     [SerializeField] ParticleSystem explosion;
+    [SerializeField] DamagePopup damagePopupPrefab;
 
     private void Start() { ps = GameManager.i.ps; }
     public void Explode(bool destroyAfter) {
@@ -18,8 +19,14 @@ public class GasTank : MonoBehaviour {
         if (Vector3.Distance(player.position, transform.position) <= damageDistance)
             ps.currentHealth -= damageAmount;
         foreach (GameObject enemy in enemies)
+        {
             if (Vector3.Distance(enemy.transform.position, transform.position) <= damageDistance)
+            {
                 enemy.GetComponent<Enemy>().takeDamage(damageAmount);
+                DamagePopup localPopup = Instantiate(damagePopupPrefab, transform.position, enemy.transform.rotation * Quaternion.Euler(0, 180, 0), enemy.transform);
+                localPopup.SetDamageText(damageAmount);
+            }
+        }
 
         foreach (GameObject tank in gasTanks)
             if (Vector3.Distance(tank.transform.position, transform.position) <= damageDistance)

@@ -25,7 +25,7 @@ public class XP : MonoBehaviour {
             ps.level++;
         }
 
-        text.text = ps.level + "\t" + ps.xp + " / " + ps.levelInterval;
+        text.text = $"{ps.level} \t {ps.xp} / {ps.levelInterval}";
     }
 
     public void UpdateXP(float maxXP, float currentXP) {

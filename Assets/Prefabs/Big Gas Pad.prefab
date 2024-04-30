@@ -294,6 +294,7 @@ MonoBehaviour:
   damageDistance: 10
   exploded: 0
   explosion: {fileID: 4228157224339352748}
+  damagePopupPrefab: {fileID: 5947491610242280372, guid: b3b33af823b65a342be15bc55e28cc13, type: 3}
 --- !u!4 &5331988394268022757 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6082298127282826415, guid: ab3787f757082314fb65fb7ca4552c31, type: 3}

@@ -4,14 +4,14 @@ public class WallRunning : MonoBehaviour {
     private Keys k;
     private PlayerMovement pm;
     private Rigidbody rb;
-    [SerializeField] Transform mc;
+    private PlayerCam mc;
     [SerializeField] Transform cameraHolder;
 
     [Header("Wallrunning")]
     [SerializeField] LayerMask whatIsWall;
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] float wallRunForce;
-    public float timer, cooldown;
+    [SerializeField] float timer, cooldown;
 
     [Header("Detection")]
     [SerializeField] float wallCheckDistance;
@@ -23,6 +23,7 @@ public class WallRunning : MonoBehaviour {
     private void Awake() {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
+        mc = Camera.main.GetComponent<PlayerCam>();
     }
     private void Start() {
         k = GameManager.i.k;
@@ -57,6 +58,14 @@ public class WallRunning : MonoBehaviour {
         if ((wallLeft || wallRight) && AboveGround() || wallForward) {
             if (playerFlipped)
                 ResetPlayerCeilingRunning();
+
+            if (wallRight)
+                mc.Tilt(15);
+            else if (wallLeft)
+                mc.Tilt(-15);
+            else if(wallForward)
+                mc.Tilt(0);
+
             StartWallRun();
         } else
             if (pm.wallRunning)
@@ -70,13 +79,8 @@ public class WallRunning : MonoBehaviour {
     }
 
     private void StartWallRun() {
-        if (!pm.wallRunning) {
+        if (!pm.wallRunning)
             pm.wallRunning = true;
-            if (wallRight)
-                mc.GetComponent<PlayerCam>().Tilt(15);
-            else if (wallLeft)
-                mc.GetComponent<PlayerCam>().Tilt(-15);
-        }
     }
     private void WallRunningMovement() {
         rb.useGravity = false;
@@ -99,8 +103,9 @@ public class WallRunning : MonoBehaviour {
     private void StopWallRun() {
         pm.wallRunning = false;
         rb.useGravity = true;
-        mc.GetComponent<PlayerCam>().Tilt(0);
+        mc.Tilt(0);
     }
+
     public void ResetPlayerCeilingRunning() {
         timer = cooldown;
         playerFlipped = false;

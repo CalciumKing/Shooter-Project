@@ -279,8 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e270fc4e7fc0d4094adcb7897efb69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  target: {fileID: 0}
+  playerTarget: {fileID: 0}
   enemyRange: 10
   chaseSpeed: 6
   returnSpeed: 4
@@ -482,6 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 101766323439612992, guid: a82fa2ffc8c5b404c87ec8a7dbe04d8a, type: 3}
+  bulletHolder: {fileID: 4711811914926510508, guid: 368c0828f2443fe47a36ab19d5a22a2b, type: 3}
   canShoot: 1
   timer: 1
   maxTime: 1

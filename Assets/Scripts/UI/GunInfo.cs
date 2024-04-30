@@ -38,7 +38,7 @@ public class GunInfo : MonoBehaviour {
         switch (ps.currentGunKey) {
             case KeyCode.Alpha1:
                 typeText.text = "Machine Gun";
-                ammoText.text = m.currentAmmo + " / " + m.maxAmmo;
+                ammoText.text = $"{m.currentAmmo} / {m.maxAmmo}";
                 if (currentAmmo != m.currentAmmo) {
                     UpdateAmmoBar(m.maxAmmo, m.currentAmmo);
                     currentAmmo = m.currentAmmo;
@@ -46,7 +46,7 @@ public class GunInfo : MonoBehaviour {
                 break;
             case KeyCode.Alpha2:
                 typeText.text = "Shotgun";
-                ammoText.text = s.currentAmmo + " / " + s.maxAmmo;
+                ammoText.text = $"{s.currentAmmo} / {s.maxAmmo}";
                 if (currentAmmo != s.currentAmmo) {
                     UpdateAmmoBar(s.maxAmmo, s.currentAmmo);
                     currentAmmo = s.currentAmmo;
@@ -54,7 +54,7 @@ public class GunInfo : MonoBehaviour {
                 break;
             case KeyCode.Alpha3:
                 typeText.text = "Pistol";
-                ammoText.text = p.currentAmmo + " / " + p.maxAmmo;
+                ammoText.text = $"{p.currentAmmo} / {p.maxAmmo}";
                 if (currentAmmo != p.currentAmmo) {
                     UpdateAmmoBar(p.maxAmmo, p.currentAmmo);
                     currentAmmo = p.currentAmmo;

@@ -242,11 +242,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5846812597070804645, guid: b1f38b8760136834f9673ff275a77616, type: 3}
   m_PrefabInstance: {fileID: 921530300180548549}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &6768316472464407907 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5846812597070804646, guid: b1f38b8760136834f9673ff275a77616, type: 3}
-  m_PrefabInstance: {fileID: 921530300180548549}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1922365651720362761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -349,4 +344,5 @@ MonoBehaviour:
   damageAmount: 10
   damageDistance: 5
   exploded: 0
-  explosionPrefab: {fileID: 6768316472464407907}
+  explosion: {fileID: 5846812597070804646, guid: b1f38b8760136834f9673ff275a77616, type: 3}
+  damagePopupPrefab: {fileID: 5947491610242280372, guid: b3b33af823b65a342be15bc55e28cc13, type: 3}
