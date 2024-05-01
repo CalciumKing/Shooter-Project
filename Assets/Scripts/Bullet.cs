@@ -1,10 +1,10 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Bullet : MonoBehaviour {
     private PlayerStats ps;
     [SerializeField] int speed = 40;
     public int damage;
-    [SerializeField] Grenade grenade;
     [SerializeField] DamagePopup damagePopupPrefab;
 
     [Header("Timer")]
@@ -19,24 +19,33 @@ public class Bullet : MonoBehaviour {
             Destroy(gameObject);
     }
     private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Enemy" && gameObject.tag == "Player Bullet")
+        switch (other.gameObject.tag)
         {
-            DamagePopup localPopup = Instantiate(damagePopupPrefab, transform.position, other.transform.rotation * Quaternion.Euler(0, 180, 0), other.transform);
-            localPopup.SetDamageText(damage);
-            other.gameObject.GetComponent<Enemy>().takeDamage(damage);
-        }
-        else if (other.gameObject.tag == "Player" && gameObject.tag == "Enemy Bullet")
-            ps.currentHealth -= damage;
+            case "Enemy":
+                if (gameObject.tag == "Player Bullet")
+                {
+                    DamagePopup localPopup = Instantiate(damagePopupPrefab, transform.position, Quaternion.identity, other.transform);
+                    localPopup.SetDamageText(damage);
+                    localPopup.transform.rotation = Quaternion.LookRotation(transform.position - GameObject.FindGameObjectWithTag("Player").transform.position);
+                    other.gameObject.GetComponent<Enemy>().takeDamage(damage);
+                }
+                break;
+            case "Player":
+                if (gameObject.tag == "Enemy Bullet")
+                    ps.currentHealth -= damage;
+                break;
 
-        else if (other.gameObject.tag == "Gas Tank")
-            other.gameObject.GetComponent<GasTank>().Explode(false);
-        else if (other.gameObject.tag == "Grenade") {
-            grenade = other.gameObject.GetComponent<Grenade>();
-            grenade.timer = .1f;
+            case "Gas Tank":
+                other.gameObject.GetComponent<GasTank>().Explode(false);
+                break;
+            case "Grenade":
+                Grenade grenade = other.gameObject.GetComponent<Grenade>();
+                grenade.timer = .1f;
+                break;
         }
 
-        if(!(other.gameObject.tag == "Player Bullet" && this.gameObject.tag == "Player Bullet") &&
-            !(other.gameObject.tag == "Enemy Bullet" && this.gameObject.tag == "Enemy Bullet"))
+        if(!(other.gameObject.tag == "Player Bullet" && gameObject.tag == "Player Bullet") &&
+            !(other.gameObject.tag == "Enemy Bullet" && gameObject.tag == "Enemy Bullet"))
             Destroy(gameObject);
     }
 }
