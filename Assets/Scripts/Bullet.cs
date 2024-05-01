@@ -1,24 +1,29 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour
+{
     private PlayerStats ps;
     [SerializeField] int speed = 40;
     public int damage;
     [SerializeField] DamagePopup damagePopupPrefab;
+    public GameObject bulletHolePrefab;
 
     [Header("Timer")]
     public float timer = 10f;
 
     private void Start() { ps = GameManager.i.ps; }
-    void Update() {
+    void Update()
+    {
         transform.Translate(new Vector3(0, 1, 0) * speed * Time.deltaTime);
         if (timer > 0)
             timer -= Time.deltaTime;
         else
             Destroy(gameObject);
     }
-    private void OnCollisionEnter(Collision other) {
+    private void OnCollisionEnter(Collision other)
+    {
         switch (other.gameObject.tag)
         {
             case "Enemy":
@@ -42,9 +47,17 @@ public class Bullet : MonoBehaviour {
                 Grenade grenade = other.gameObject.GetComponent<Grenade>();
                 grenade.timer = .1f;
                 break;
+            case "Shootable":
+                print("working");
+                RaycastHit t_hit = new RaycastHit();
+                GameObject t_newHole = Instantiate(bulletHolePrefab, t_hit.point + t_hit.normal * 0.001f, Quaternion.identity);
+                t_newHole.transform.LookAt(t_hit.point + t_hit.normal);
+                print("done");
+                Destroy(t_newHole, 5f);
+                break;
         }
 
-        if(!(other.gameObject.tag == "Player Bullet" && gameObject.tag == "Player Bullet") &&
+        if (!(other.gameObject.tag == "Player Bullet" && gameObject.tag == "Player Bullet") &&
             !(other.gameObject.tag == "Enemy Bullet" && gameObject.tag == "Enemy Bullet"))
             Destroy(gameObject);
     }
