@@ -131,8 +131,8 @@ MonoBehaviour:
   damageDistance: 10
   exploded: 0
   explosion: {fileID: 0}
-  damagePopupPrefab: {fileID: 5947491610242280372, guid: b3b33af823b65a342be15bc55e28cc13, type: 3}
   timer: 5
   cooldown: 5
   explosionPrefab: {fileID: 5846812597070804646, guid: b1f38b8760136834f9673ff275a77616, type: 3}
   explosionInstance: {fileID: 0}
+  explosionFinished: 0

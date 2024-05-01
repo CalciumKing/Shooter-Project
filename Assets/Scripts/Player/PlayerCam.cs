@@ -4,7 +4,9 @@ public class PlayerCam : MonoBehaviour {
     private Keys k;
     private Camera mc;
     [SerializeField] WallRunning wr;
-    public Transform orientation, cameraHolder, weaponHolder;
+    public Transform orientation;
+    public Transform cameraHolder;
+    public Transform weaponHolder;
     private float xRotation, yRotation;
     private int xLookSense, yLookSense;
 
@@ -44,13 +46,11 @@ public class PlayerCam : MonoBehaviour {
             mc.fieldOfView = 20;
             xLookSense = k.scopeXSense;
             yLookSense = k.scopeYSense;
-            GetComponentInChildren<Gun>().spread /= 5;
         } else if (Input.GetKeyUp(k.aim)) {
             weaponHolder.transform.Translate(new Vector3(.4f, 0, -.5f), transform);
             mc.fieldOfView = 60;
             xLookSense = k.xSense;
             yLookSense = k.ySense;
-            GetComponentInChildren<Gun>().spread *= 5;
         }
     }
     public void Tilt(float zTilt) { transform.localRotation = Quaternion.Euler(0, 0, zTilt); }
