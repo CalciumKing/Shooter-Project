@@ -12,11 +12,9 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 moveDirection;
 
     [Header("Jumping")]
-    [SerializeField] float airMultiplier;
-    [SerializeField] float jumpForce;
-    public bool grounded, readyToJump, hasDoubleJumped, crouchInAir;
-    [SerializeField] float groundDrag, playerHeight;
     [SerializeField] LayerMask whatIsGround;
+    public bool grounded, readyToJump, hasDoubleJumped, crouchInAir;
+    [SerializeField] float airMultiplier, jumpForce, groundDrag, playerHeight;
 
     [Header("Falling")]
     private float fallTime;

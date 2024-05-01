@@ -7,8 +7,7 @@ public class Bullet : MonoBehaviour {
     [SerializeField] Grenade grenade;
     [SerializeField] DamagePopup damagePopupPrefab;
 
-    [Header("Timer")]
-    public float timer = 10f;
+    private float timer = 10f;
 
     private void Start() { ps = GameManager.i.ps; }
     void Update() {
@@ -19,13 +18,11 @@ public class Bullet : MonoBehaviour {
             Destroy(gameObject);
     }
     private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Enemy" && gameObject.tag == "Player Bullet")
-        {
+        if (other.gameObject.tag == "Enemy" && gameObject.tag == "Player Bullet") {
             DamagePopup localPopup = Instantiate(damagePopupPrefab, transform.position, other.transform.rotation * Quaternion.Euler(0, 180, 0), other.transform);
             localPopup.SetDamageText(damage);
             other.gameObject.GetComponent<Enemy>().takeDamage(damage);
-        }
-        else if (other.gameObject.tag == "Player" && gameObject.tag == "Enemy Bullet")
+        } else if (other.gameObject.tag == "Player" && gameObject.tag == "Enemy Bullet")
             ps.currentHealth -= damage;
 
         else if (other.gameObject.tag == "Gas Tank")
@@ -35,8 +32,8 @@ public class Bullet : MonoBehaviour {
             grenade.timer = .1f;
         }
 
-        if(!(other.gameObject.tag == "Player Bullet" && this.gameObject.tag == "Player Bullet") &&
-            !(other.gameObject.tag == "Enemy Bullet" && this.gameObject.tag == "Enemy Bullet"))
+        if (!(other.gameObject.tag == "Player Bullet" && gameObject.tag == "Player Bullet") &&
+            !(other.gameObject.tag == "Enemy Bullet" && gameObject.tag == "Enemy Bullet"))
             Destroy(gameObject);
     }
 }

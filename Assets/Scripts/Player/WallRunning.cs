@@ -10,15 +10,13 @@ public class WallRunning : MonoBehaviour {
     [Header("Wallrunning")]
     [SerializeField] LayerMask whatIsWall;
     [SerializeField] LayerMask whatIsGround;
-    [SerializeField] float wallRunForce;
-    [SerializeField] float timer, cooldown;
+    [SerializeField] float wallRunForce, timer, cooldown;
 
     [Header("Detection")]
-    [SerializeField] float wallCheckDistance;
-    [SerializeField] float minJumpHeight;
+    public bool playerFlipped = false;
+    [SerializeField] float wallCheckDistance, minJumpHeight;
     private RaycastHit leftWallHit, rightWallHit;
     private bool wallLeft, wallRight, wallForward, ceilingAbove;
-    public bool playerFlipped = false;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -63,13 +61,13 @@ public class WallRunning : MonoBehaviour {
                 mc.Tilt(15);
             else if (wallLeft)
                 mc.Tilt(-15);
-            else if(wallForward)
+            else if (wallForward)
                 mc.Tilt(0);
 
             StartWallRun();
         } else
             if (pm.wallRunning)
-                StopWallRun();
+            StopWallRun();
 
         if (ceilingAbove && !playerFlipped && (timer <= 0 || wallForward)) {
             cameraHolder.localRotation = Quaternion.Euler(cameraHolder.rotation.x, cameraHolder.rotation.y, 180);
