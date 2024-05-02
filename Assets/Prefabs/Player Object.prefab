@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1442164641956420760}
   - component: {fileID: 1223748607}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player Object
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,10 +212,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  fallTime: 0
   fallDamageMultiplier: 7
-  startJump: {x: 0, y: 0, z: 0}
-  endJump: {x: 0, y: 0, z: 0}
   crouched: 0
   wallRunning: 0
   wallRunSpeed: 8.5
@@ -254,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20d0cf2ce108a24a9f8764ebf639d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mc: {fileID: 0}
+  cameraHolder: {fileID: 0}
   whatIsWall:
     serializedVersion: 2
     m_Bits: 8
@@ -262,8 +259,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wallRunForce: 200
+  timer: 0
+  cooldown: 0.5
   wallCheckDistance: 0.7
   minJumpHeight: 2
+  playerFlipped: 0
 --- !u!114 &1442164641956420760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,16 +297,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cd: {fileID: 0}
-  throwItem: {fileID: 7682948299845589924, guid: cb7f3abfb0095324fa75b94d1162b7f1, type: 3}
-  throwForce: 1000
-  canThrow: 1
-  throwTimer: 5
-  throwCooldown: 5
+  throwItem: {fileID: 505866037948214943, guid: 6f5d79a0c79f37c4e8e9537aac5a7262, type: 3}
   throwPos: {fileID: 0}
-  canHeal: 1
-  healTimer: 5
-  healCooldown: 5
+  throwForce: 12
+  throwTimer: 0
+  throwCooldown: 7
   healAmount: 15
+  healTimer: 0
+  healCooldown: 5
+  damagePopupPrefab: {fileID: 5947491610242280372, guid: b3b33af823b65a342be15bc55e28cc13, type: 3}
+  gunHolder: {fileID: 0}
+  hitting: 0
+  meleeDamage: 15
+  meleeRange: 2
+  meleeTimer: 0
+  meleeCooldown: 0.2
 --- !u!1 &1442164642482181904
 GameObject:
   m_ObjectHideFlags: 0

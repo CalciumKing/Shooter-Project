@@ -4,9 +4,8 @@ public class Enemy : MonoBehaviour {
     private PlayerStats ps;
 
     [Header("Enemy Info")]
-    [SerializeField] public int maxHealth;
-    [SerializeField] public int health;
     [SerializeField] int xp;
+    public int maxHealth, health;
 
     private void Start() {
         ps = GameManager.i.ps;
