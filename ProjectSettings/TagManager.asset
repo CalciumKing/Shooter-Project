@@ -9,7 +9,6 @@ TagManager:
   - Enemy Bullet
   - Gas Tank
   - Grenade
-  - Shootable
   layers:
   - Default
   - TransparentFX

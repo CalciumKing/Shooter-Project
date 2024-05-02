@@ -8,7 +8,6 @@ public class Bullet : MonoBehaviour
     [SerializeField] int speed = 40;
     public int damage;
     [SerializeField] DamagePopup damagePopupPrefab;
-    public GameObject bulletHolePrefab;
 
     [Header("Timer")]
     public float timer = 10f;
@@ -46,14 +45,6 @@ public class Bullet : MonoBehaviour
             case "Grenade":
                 Grenade grenade = other.gameObject.GetComponent<Grenade>();
                 grenade.timer = .1f;
-                break;
-            case "Shootable":
-                print("working");
-                RaycastHit t_hit = new RaycastHit();
-                GameObject t_newHole = Instantiate(bulletHolePrefab, t_hit.point + t_hit.normal * 0.001f, Quaternion.identity);
-                t_newHole.transform.LookAt(t_hit.point + t_hit.normal);
-                print("done");
-                Destroy(t_newHole, 5f);
                 break;
         }
 

@@ -13,6 +13,7 @@ public class Keys : ScriptableObject {
     public KeyCode crouch = KeyCode.LeftControl;
     public KeyCode throwable = KeyCode.Q;
     public KeyCode heal = KeyCode.X;
+    public KeyCode melee = KeyCode.F;
 
     [Header("Mouse/Look Sens")]
     public KeyCode fire = KeyCode.Mouse0;

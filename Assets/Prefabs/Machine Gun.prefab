@@ -148,7 +148,6 @@ MonoBehaviour:
   bullet: {fileID: 101766323439612992, guid: cd709f568ba51c148856dc379eadb03e, type: 3}
   muzzlePos: {fileID: 5244277947907153689}
   muzzleFlash: {fileID: 1663832381110302578}
-  bulletHolder: {fileID: 4711811914926510508, guid: 368c0828f2443fe47a36ab19d5a22a2b, type: 3}
   cooldown: 0.1
   timer: 0.1
   canShoot: 1

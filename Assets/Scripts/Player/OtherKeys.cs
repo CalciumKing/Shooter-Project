@@ -9,16 +9,21 @@ public class OtherKeys : MonoBehaviour {
     [SerializeField] GameObject throwItem;
     [SerializeField] Transform throwPos;
     [SerializeField] int throwForce;
-    [SerializeField] float throwTimer;
-    [SerializeField] float throwCooldown;
+    [SerializeField] float throwTimer, throwCooldown;
     private Camera cam;
     private bool canThrow;
 
     [Header("Healing")]
-    [SerializeField] float healTimer;
-    [SerializeField] float healCooldown;
     [SerializeField] int healAmount;
+    [SerializeField] float healTimer, healCooldown;
     private bool canHeal;
+
+    [Header("Melee")]
+    [SerializeField] DamagePopup damagePopupPrefab;
+    [SerializeField] Transform gunHolder;
+    [SerializeField] bool hitting = false;
+    [SerializeField] int meleeDamage, meleeRange;
+    [SerializeField] float meleeTimer, meleeCooldown;
 
     private void Start() {
         ps = GameManager.i.ps;
@@ -26,6 +31,45 @@ public class OtherKeys : MonoBehaviour {
         cam = Camera.main;
     }
     private void Update() {
+        if (meleeTimer > 0)
+        {
+            meleeTimer -= Time.deltaTime;
+        }
+        else
+        {
+            if (hitting)
+            {
+                Vector3 gh = gunHolder.transform.position;
+                gunHolder.transform.Translate(new Vector3(0, 0, -.3f));
+                hitting = false;
+            }
+            if (Input.GetKeyDown(k.melee))
+            {
+                Vector3 gh = gunHolder.transform.position;
+                gunHolder.transform.Translate(new Vector3(0, 0, .3f));
+                meleeTimer = meleeCooldown;
+                hitting = true;
+
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                GameObject[] gasTanks = GameObject.FindGameObjectsWithTag("Gas Tank");
+                
+                foreach (GameObject enemy in enemies)
+                {
+                    if (Vector3.Distance(gunHolder.position, enemy.transform.position) <= meleeRange)
+                    {
+                        DamagePopup localPopup = Instantiate(damagePopupPrefab, transform.position, enemy.transform.rotation * Quaternion.Euler(0, 180, 0), enemy.transform);
+                        localPopup.SetDamageText(meleeDamage);
+                        enemy.GetComponent<Enemy>().takeDamage(meleeDamage);
+                    }
+                }
+
+                foreach (GameObject tank in gasTanks)
+                    if (Vector3.Distance(tank.transform.position, transform.position) <= meleeRange)
+                        if (!tank.GetComponent<GasTank>().exploded)
+                            tank.GetComponent<GasTank>().Explode(false);
+            }
+        }
+
         if (canThrow) {
             if (Input.GetKeyDown(k.throwable)) {
                 GameObject proj = Instantiate(throwItem, throwPos.position, Quaternion.identity);
@@ -41,6 +85,7 @@ public class OtherKeys : MonoBehaviour {
                 throwTimer = throwCooldown;
             }
         }
+
         if (canHeal) {
             if (Input.GetKeyDown(k.heal) && ps.currentHealth != ps.maxHealth) {
                 ps.currentHealth += healAmount;
