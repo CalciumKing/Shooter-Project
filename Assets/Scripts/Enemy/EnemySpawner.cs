@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour {
     private Pathfinding pf;
 
     [Header("Timer")]
-    [SerializeField] float timer;
+    public float timer;
     [SerializeField] float coolDown;
 
     private void Start() {

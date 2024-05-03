@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GasTankSpawner : MonoBehaviour {
     public GameObject gasTank;
-    public Transform gasSpawnPos;
+    [SerializeField] Transform gasSpawnPos;
 
     [Header("Timer")]
     public float timer;

@@ -5,6 +5,10 @@ public class OtherKeys : MonoBehaviour {
     private Keys k;
     [SerializeField] Cooldowns cd;
 
+    [Header("Pausing")]
+    [SerializeField] Screens s;
+    private bool paused;
+
     [Header("Throwing")]
     [SerializeField] GameObject throwItem;
     [SerializeField] Transform throwPos;
@@ -99,6 +103,16 @@ public class OtherKeys : MonoBehaviour {
                 canHeal = true;
                 healTimer = healCooldown;
             }
+        }
+
+        if (Input.GetKeyDown(k.pause))
+        {
+            if (paused == false)
+                s.Pause();
+            else
+                s.UnPause();
+
+            paused = !paused;
         }
     }
     public void Respawn() {

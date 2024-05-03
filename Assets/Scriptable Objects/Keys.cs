@@ -14,6 +14,7 @@ public class Keys : ScriptableObject {
     public KeyCode throwable = KeyCode.Q;
     public KeyCode heal = KeyCode.X;
     public KeyCode melee = KeyCode.F;
+    public KeyCode pause = KeyCode.Escape;
 
     [Header("Mouse/Look Sens")]
     public KeyCode fire = KeyCode.Mouse0;

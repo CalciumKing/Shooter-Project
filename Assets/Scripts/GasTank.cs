@@ -20,7 +20,7 @@ public class GasTank : MonoBehaviour {
             ps.currentHealth -= damageAmount;
         foreach (GameObject enemy in enemies)
         {
-            if (Vector3.Distance(enemy.transform.position, transform.position) <= damageDistance)
+            if (enemy != null && Vector3.Distance(enemy.transform.position, transform.position) <= damageDistance)
             {
                 DamagePopup localPopup = Instantiate(damagePopupPrefab, transform.position, enemy.transform.rotation * Quaternion.Euler(0, 180, 0), enemy.transform);
                 localPopup.SetDamageText(damageAmount);
@@ -33,12 +33,17 @@ public class GasTank : MonoBehaviour {
                 if (!tank.GetComponent<GasTank>().exploded)
                     tank.GetComponent<GasTank>().Explode(false);
         foreach (GameObject grenade in grenades)
+        {
             if (Vector3.Distance(grenade.transform.position, transform.position) <= damageDistance)
-                if (!grenade.GetComponent<Grenade>().exploded) {
-                    Grenade grenadeComponent = grenade.GetComponent<Grenade>();
+            {
+                Grenade grenadeComponent = grenade.GetComponent<Grenade>();
+                if (!grenadeComponent.exploded)
+                {
                     grenadeComponent.timer = .1f;
                     grenadeComponent.Explode(true);
                 }
+            }
+        }
 
         if (!destroyAfter) {
             explosion.Play();

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc35c02723fa5f469de0e0e2018cf67, type: 3}
   m_Name: Player Stats
   m_EditorClassIdentifier: Assembly-CSharp::NewBehaviourScript
-  currentWeapon: {fileID: 8426396110273374082, guid: 824a081ecac539847abe5024aadd9c47, type: 3}
+  currentWeapon: {fileID: 8380769455003715722, guid: 82ad33fdf0174154aa5dd2102a4c0573, type: 3}
   currentInsta: {fileID: 0}
-  xp: 120
-  levelInterval: 150
-  level: 2
-  currentHealth: 50
+  currentGunKey: 49
+  xp: 30
+  levelInterval: 200
+  level: 3
+  currentHealth: 100
   maxHealth: 100
-  spawnPos: {x: -36.8, y: 9.8, z: 18.82}
+  spawnPos: {x: -1, y: -1, z: 2}
