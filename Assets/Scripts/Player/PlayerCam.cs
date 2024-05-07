@@ -3,10 +3,14 @@ using UnityEngine;
 public class PlayerCam : MonoBehaviour {
     private Keys k;
     private Camera mc;
+    private Screens s;
     [SerializeField] WallRunning wr;
+
+    [Header("Transforms")]
     public Transform orientation;
     public Transform cameraHolder;
     public Transform weaponHolder;
+
     private float xRotation, yRotation;
     private int xLookSense, yLookSense;
 
@@ -17,6 +21,7 @@ public class PlayerCam : MonoBehaviour {
         k = GameManager.i.k;
         xLookSense = k.xSense;
         yLookSense = k.ySense;
+        s = FindObjectOfType<Screens>();
     }
 
     private void Update() {
@@ -41,16 +46,18 @@ public class PlayerCam : MonoBehaviour {
             orientation.rotation = Quaternion.Euler(0, yRotation, 0);
         }
 
-        if (Input.GetKeyDown(k.aim)) {
-            weaponHolder.transform.Translate(new Vector3(-.4f, 0, .5f), transform);
-            mc.fieldOfView = 20;
-            xLookSense = k.scopeXSense;
-            yLookSense = k.scopeYSense;
-        } else if (Input.GetKeyUp(k.aim)) {
-            weaponHolder.transform.Translate(new Vector3(.4f, 0, -.5f), transform);
-            mc.fieldOfView = 60;
-            xLookSense = k.xSense;
-            yLookSense = k.ySense;
+        if (!s.stopped) {
+            if (Input.GetKeyDown(k.aim)) {
+                weaponHolder.transform.Translate(new Vector3(-.4f, 0, .5f), transform);
+                mc.fieldOfView = 20;
+                xLookSense = k.scopeXSense;
+                yLookSense = k.scopeYSense;
+            } else if (Input.GetKeyUp(k.aim)) {
+                weaponHolder.transform.Translate(new Vector3(.4f, 0, -.5f), transform);
+                mc.fieldOfView = 60;
+                xLookSense = k.xSense;
+                yLookSense = k.ySense;
+            }
         }
     }
     public void Tilt(float zTilt) { transform.localRotation = Quaternion.Euler(0, 0, zTilt); }

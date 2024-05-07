@@ -1,9 +1,6 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class Bullet : MonoBehaviour
-{
+public class Bullet : MonoBehaviour {
     private PlayerStats ps;
     [SerializeField] int speed = 40;
     public int damage;
@@ -13,21 +10,17 @@ public class Bullet : MonoBehaviour
     public float timer = 10f;
 
     private void Start() { ps = GameManager.i.ps; }
-    void Update()
-    {
+    void Update() {
         transform.Translate(new Vector3(0, 1, 0) * speed * Time.deltaTime);
         if (timer > 0)
             timer -= Time.deltaTime;
         else
             Destroy(gameObject);
     }
-    private void OnCollisionEnter(Collision other)
-    {
-        switch (other.gameObject.tag)
-        {
+    private void OnCollisionEnter(Collision other) {
+        switch (other.gameObject.tag) {
             case "Enemy":
-                if (gameObject.tag == "Player Bullet")
-                {
+                if (gameObject.tag == "Player Bullet") {
                     DamagePopup localPopup = Instantiate(damagePopupPrefab, transform.position, Quaternion.identity, other.transform);
                     localPopup.SetDamageText(damage);
                     localPopup.transform.rotation = Quaternion.LookRotation(transform.position - GameObject.FindGameObjectWithTag("Player").transform.position);

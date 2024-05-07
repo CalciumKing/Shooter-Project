@@ -3,6 +3,8 @@ using UnityEngine;
 public class Screens : MonoBehaviour {
     private PlayerStats ps;
     private OtherKeys ok;
+
+    [Header("Screens")]
     [SerializeField] GameObject loseScreen;
     [SerializeField] GameObject pauseScreen;
 
@@ -10,41 +12,38 @@ public class Screens : MonoBehaviour {
     [SerializeField] Transform player;
     [SerializeField] Transform playerSpawnPos;
     [SerializeField] GunStats[] weapons;
+    public bool stopped;
 
     private void Start() {
         ps = GameManager.i.ps;
         ok = player.GetComponent<OtherKeys>();
     }
-    private void MenuSettings()
-    {
-        if (Time.timeScale == 0)
-        {
+    private void MenuSettings(bool screenOn) {
+        if (!screenOn) {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             loseScreen.SetActive(false);
             pauseScreen.SetActive(false);
-        }
-        else
-        {
+            stopped = false;
+        } else {
             Time.timeScale = 0;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            stopped = true;
         }
     }
-    public void Pause()
-    {
+    public void Pause() {
         pauseScreen.SetActive(true);
-        MenuSettings();
+        MenuSettings(true);
     }
-    public void UnPause()
-    {
-        pauseScreen.SetActive(true);
-        MenuSettings();
+    public void UnPause() {
+        pauseScreen.SetActive(false);
+        MenuSettings(false);
     }
     public void Death() {
         loseScreen.SetActive(true);
-        MenuSettings();
+        MenuSettings(true);
     }
     public void Restart() {
         player.position = playerSpawnPos.position;
@@ -56,15 +55,13 @@ public class Screens : MonoBehaviour {
             weapon.currentAmmo = weapon.maxAmmo;
 
         EnemySpawner[] enemySpawners = FindObjectsOfType<EnemySpawner>();
-        foreach (EnemySpawner enemy in enemySpawners)
-        {
+        foreach (EnemySpawner enemy in enemySpawners) {
             enemy.enemy.SetActive(false);
             enemy.timer = 0;
         }
 
         GasTankSpawner[] gasTankSpawners = FindObjectsOfType<GasTankSpawner>();
-        foreach (GasTankSpawner tank in gasTankSpawners)
-        {
+        foreach (GasTankSpawner tank in gasTankSpawners) {
             tank.gasTank.SetActive(false);
             tank.timer = 0;
         }
@@ -73,6 +70,10 @@ public class Screens : MonoBehaviour {
         foreach (Grenade g in grenade)
             Destroy(g.gameObject);
 
-        MenuSettings();
+        Bullet[] bullet = FindObjectsOfType<Bullet>();
+        foreach (Bullet b in bullet)
+            Destroy(b.gameObject);
+
+        MenuSettings(false);
     }
 }

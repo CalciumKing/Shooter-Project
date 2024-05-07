@@ -10,37 +10,33 @@ public class GasTank : MonoBehaviour {
     private void Start() { ps = GameManager.i.ps; }
     public void Explode(bool destroyAfter) {
         Transform player = GameObject.FindGameObjectWithTag("Player").transform;
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject[] gasTanks = GameObject.FindGameObjectsWithTag("Gas Tank");
-        GameObject[] grenades = GameObject.FindGameObjectsWithTag("Grenade");
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        GasTank[] gasTanks = FindObjectsOfType<GasTank>();
+        Grenade[] grenades = FindObjectsOfType<Grenade>();
 
         exploded = true;
 
         if (Vector3.Distance(player.position, transform.position) <= damageDistance)
             ps.currentHealth -= damageAmount;
-        foreach (GameObject enemy in enemies)
-        {
-            if (enemy != null && Vector3.Distance(enemy.transform.position, transform.position) <= damageDistance)
-            {
-                DamagePopup localPopup = Instantiate(damagePopupPrefab, transform.position, enemy.transform.rotation * Quaternion.Euler(0, 180, 0), enemy.transform);
-                localPopup.SetDamageText(damageAmount);
-                enemy.GetComponent<Enemy>().takeDamage(damageAmount);
+        foreach (Enemy enemy in enemies) {
+            if (enemy != null && Vector3.Distance(enemy.transform.position, transform.position) <= damageDistance) {
+                try {
+                    DamagePopup localPopup = Instantiate(damagePopupPrefab, transform.position, enemy.transform.rotation * Quaternion.Euler(0, 180, 0), enemy.transform);
+                    localPopup.SetDamageText(damageAmount);
+                    enemy.takeDamage(damageAmount);
+                } catch { }
             }
         }
 
-        foreach (GameObject tank in gasTanks)
+        foreach (GasTank tank in gasTanks)
             if (Vector3.Distance(tank.transform.position, transform.position) <= damageDistance)
-                if (!tank.GetComponent<GasTank>().exploded)
-                    tank.GetComponent<GasTank>().Explode(false);
-        foreach (GameObject grenade in grenades)
-        {
-            if (Vector3.Distance(grenade.transform.position, transform.position) <= damageDistance)
-            {
-                Grenade grenadeComponent = grenade.GetComponent<Grenade>();
-                if (!grenadeComponent.exploded)
-                {
-                    grenadeComponent.timer = .1f;
-                    grenadeComponent.Explode(true);
+                if (!tank.exploded)
+                    tank.Explode(false);
+        foreach (Grenade grenade in grenades) {
+            if (Vector3.Distance(grenade.transform.position, transform.position) <= damageDistance) {
+                if (!grenade.exploded) {
+                    grenade.timer = .1f;
+                    grenade.Explode(true);
                 }
             }
         }

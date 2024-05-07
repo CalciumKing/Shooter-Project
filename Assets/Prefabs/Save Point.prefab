@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: addc2ef6ea51f5c47a85617c9711cb1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 11400000, guid: d74df52f97e75f74380a491d6e84e0df, type: 2}
   spawnPos: {fileID: 0}
 --- !u!1 &3555711676124549994
 GameObject:

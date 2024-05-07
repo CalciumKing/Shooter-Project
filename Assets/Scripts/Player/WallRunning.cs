@@ -63,7 +63,7 @@ public class WallRunning : MonoBehaviour {
                 mc.Tilt(15);
             else if (wallLeft)
                 mc.Tilt(-15);
-            else if(wallForward)
+            else if (wallForward)
                 mc.Tilt(0);
 
             StartWallRun();
