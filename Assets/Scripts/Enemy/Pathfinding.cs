@@ -34,7 +34,7 @@ public class Pathfinding : MonoBehaviour {
             if (distanceBetweenPoint <= 2) {
                 for (int i = 0; i < patrolPoints.Length; i++) {
                     if (currentPatrolPoint == patrolPoints[i]) {
-                        if(i + 1 > patrolPoints.Length - 1)
+                        if (i + 1 > patrolPoints.Length - 1)
                             currentPatrolPoint = patrolPoints[0];
                         else
                             currentPatrolPoint = patrolPoints[i + 1];

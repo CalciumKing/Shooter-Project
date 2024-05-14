@@ -65,9 +65,8 @@ public class WallRunning : MonoBehaviour {
                 mc.Tilt(0);
 
             StartWallRun();
-        } else
-            if (pm.wallRunning)
-                StopWallRun();
+        } else if (pm.wallRunning)
+            StopWallRun();
 
         if (ceilingAbove && !playerFlipped && (timer <= 0 || wallForward)) {
             cameraHolder.localRotation = Quaternion.Euler(cameraHolder.rotation.x, cameraHolder.rotation.y, 180);

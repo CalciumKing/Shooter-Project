@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour {
 
     [Header("Falling")]
     [SerializeField] int fallDamageMultiplier;
-    private float fallTime;
+    [SerializeField] float fallTime;
     private Vector3 startJump, endJump;
 
     [Header("Speed")]
@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour {
                 fallTime = 0;
             }
         } else if (Input.GetKey(k.crouch)) {
-            if(wr.playerFlipped)
+            if (wr.playerFlipped)
                 wr.ResetPlayerCeilingRunning();
             else {
                 if (wallRunning)
