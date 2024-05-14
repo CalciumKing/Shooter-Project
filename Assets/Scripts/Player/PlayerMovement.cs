@@ -12,15 +12,14 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 moveDirection;
 
     [Header("Jumping")]
-    [SerializeField] float airMultiplier;
-    [SerializeField] float jumpForce;
-    public bool grounded, readyToJump, hasDoubleJumped, crouchInAir;
-    [SerializeField] float groundDrag, playerHeight;
     [SerializeField] LayerMask whatIsGround;
+    [SerializeField] float airMultiplier, jumpForce;
+    [SerializeField] float groundDrag, playerHeight;
+    public bool grounded, readyToJump, hasDoubleJumped, crouchInAir;
 
     [Header("Falling")]
-    private float fallTime;
     [SerializeField] int fallDamageMultiplier;
+    private float fallTime;
     private Vector3 startJump, endJump;
 
     [Header("Speed")]
@@ -64,12 +63,17 @@ public class PlayerMovement : MonoBehaviour {
             } else if (!grounded && !hasDoubleJumped) {
                 hasDoubleJumped = true;
                 Jump();
+                fallTime = 0;
             }
         } else if (Input.GetKey(k.crouch)) {
-            if (wallRunning)
-                rb.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
-            else
-                crouched = true;
+            if(wr.playerFlipped)
+                wr.ResetPlayerCeilingRunning();
+            else {
+                if (wallRunning)
+                    rb.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
+                else
+                    crouched = true;
+            }
         } else if (Input.GetKeyUp(k.crouch) && crouched)
             crouched = false;
 

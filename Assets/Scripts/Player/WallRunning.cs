@@ -8,17 +8,15 @@ public class WallRunning : MonoBehaviour {
     [SerializeField] Transform cameraHolder;
 
     [Header("Wallrunning")]
-    [SerializeField] LayerMask whatIsWall;
-    [SerializeField] LayerMask whatIsGround;
     [SerializeField] float wallRunForce;
+    [SerializeField] LayerMask whatIsWall, whatIsGround;
     [SerializeField] float timer, cooldown;
 
     [Header("Detection")]
-    [SerializeField] float wallCheckDistance;
-    [SerializeField] float minJumpHeight;
+    public bool playerFlipped = false;
+    [SerializeField] float wallCheckDistance, minJumpHeight;
     private RaycastHit leftWallHit, rightWallHit;
     private bool wallLeft, wallRight, wallForward, ceilingAbove;
-    public bool playerFlipped = false;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();

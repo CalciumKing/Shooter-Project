@@ -102,7 +102,7 @@ public class OtherKeys : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(k.pause)) {
-            if (paused == false)
+            if (!paused)
                 s.Pause();
             else
                 s.UnPause();
