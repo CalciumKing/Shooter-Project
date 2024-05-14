@@ -25,7 +25,8 @@ public class PlayerMovement : MonoBehaviour {
     [Header("Speed")]
     [SerializeField] bool crouched;
     public bool wallRunning;
-    public float wallRunSpeed, moveSpeed, crouchSpeed, walkSpeed, runSpeed;
+    public float moveSpeed, runSpeed;
+    [SerializeField] float wallRunSpeed, crouchSpeed, walkSpeed;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();

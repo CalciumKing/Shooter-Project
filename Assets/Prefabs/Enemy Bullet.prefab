@@ -98,9 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd43573854af424c98d472bf7acd1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  s: {fileID: 2256207335363250628, guid: b02b145be06174d47a1f4fed340f7cd3, type: 3}
-  speed: 5
+  speed: 30
   damage: 10
+  damagePopupPrefab: {fileID: 0}
   timer: 10
 --- !u!136 &-892956998245269138
 CapsuleCollider:

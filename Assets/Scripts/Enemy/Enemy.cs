@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour {
         if (health <= 0) {
             ps.xp += xp;
             gameObject.SetActive(false);
+            FindObjectOfType<Screens>().timer -= 5f;
         }
     }
 }

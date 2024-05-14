@@ -1,4 +1,8 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System;
 
 public class Screens : MonoBehaviour {
     private PlayerStats ps;
@@ -7,6 +11,7 @@ public class Screens : MonoBehaviour {
     [Header("Screens")]
     [SerializeField] GameObject loseScreen;
     [SerializeField] GameObject pauseScreen;
+    [SerializeField] GameObject winScreen;
 
     [Header("Player")]
     [SerializeField] Transform player;
@@ -14,17 +19,32 @@ public class Screens : MonoBehaviour {
     [SerializeField] GunStats[] weapons;
     public bool stopped;
 
+    [Header("Timer")]
+    public float timer;
+    [SerializeField] TMP_Text timerText, bestText;
+
     private void Start() {
         ps = GameManager.i.ps;
         ok = player.GetComponent<OtherKeys>();
+        loseScreen.SetActive(false);
+        pauseScreen.SetActive(false);
+        winScreen.SetActive(false);
     }
-    private void MenuSettings(bool screenOn) {
+    private void Update() {
+        timer += Time.deltaTime;
+
+        timerText.text = String.Format("{0:0.00}", timer);
+        bestText.text = "Best: " + String.Format("{0:0.00}", ps.bestTime);
+    }
+
+    public void MenuSettings(bool screenOn) {
         if (!screenOn) {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             loseScreen.SetActive(false);
             pauseScreen.SetActive(false);
+            winScreen.SetActive(false);
             stopped = false;
         } else {
             Time.timeScale = 0;
@@ -32,6 +52,18 @@ public class Screens : MonoBehaviour {
             Cursor.visible = true;
             stopped = true;
         }
+    }
+    public void Quit() {
+        Application.Quit();
+    }
+    public void ChangeLevel() {
+        SceneManager.LoadScene("SampleScene");
+    }
+    public void Restart() {
+        timer = 0;
+        playerSpawnPos.position = Vector3.zero;
+        ps.spawnPos = Vector3.zero;
+        Respawn();
     }
     public void Pause() {
         pauseScreen.SetActive(true);
@@ -45,9 +77,10 @@ public class Screens : MonoBehaviour {
         loseScreen.SetActive(true);
         MenuSettings(true);
     }
-    public void Restart() {
+    public void Respawn() {
         player.position = playerSpawnPos.position;
         ps.currentHealth = ps.maxHealth;
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         ok.Respawn();
 

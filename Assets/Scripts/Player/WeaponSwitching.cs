@@ -5,8 +5,8 @@ public class WeaponSwitching : MonoBehaviour {
     private PlayerStats ps;
     private Keys k;
     private Screens s;
-    public Transform weaponHolder;
-    public GameObject[] guns;
+    [SerializeField] Transform weaponHolder;
+    [SerializeField] GameObject[] guns;
 
     private void Start() {
         ps = GameManager.i.ps;

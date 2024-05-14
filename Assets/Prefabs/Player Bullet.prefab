@@ -98,10 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd43573854af424c98d472bf7acd1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 30
   damage: 10
   damagePopupPrefab: {fileID: 5947491610242280372, guid: b3b33af823b65a342be15bc55e28cc13, type: 3}
-  bulletHolePrefab: {fileID: 3507520253903277699, guid: 77d2b20532084834f83b33d88444bef7, type: 3}
   timer: 10
 --- !u!136 &-892956998245269138
 CapsuleCollider:

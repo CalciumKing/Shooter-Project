@@ -18,4 +18,7 @@ public class PlayerStats : ScriptableObject {
 
     [Header("Spawn Info")]
     public Vector3 spawnPos;
+
+    [Header("Timer")]
+    public float bestTime;
 }

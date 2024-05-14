@@ -2,16 +2,15 @@ using TMPro;
 using UnityEngine;
 
 public class itemText : MonoBehaviour {
-    public PlayerStats ps;
+    private PlayerStats ps;
     private TextMeshProUGUI text;
     private Transform player;
     public Transform spawnPos;
 
-    private void Awake() {
+    private void Start() {
+        ps = GameManager.i.ps;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         text = GetComponentInChildren<TextMeshProUGUI>();
-    }
-    private void Start() {
         text.gameObject.SetActive(false);
     }
     private void Update() {

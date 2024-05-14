@@ -12,15 +12,11 @@ public class Sliding : MonoBehaviour {
     private PlayerMovement pm;
 
     [Header("Sliding")]
-    public float slideForce;
-    public float slideTimer;
-    public float slideMaxTime;
     public bool sliding;
-
-    [Header("Input")]
+    [SerializeField] float slideForce, slideTimer, slideMaxTime;
+    [SerializeField] Vector3 lastPos;
     
-    private float horizontalInput;
-    private float verticalInput;
+    private float horizontalInput, verticalInput;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -46,11 +42,20 @@ public class Sliding : MonoBehaviour {
     private void StartSlide() {
         sliding = true;
         slideTimer = slideMaxTime;
+        lastPos = transform.position;
     }
     private void SlidingMovement() {
         Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
+
+        if (lastPos.y > transform.position.y) {
+            slideTimer = .5f;
+            lastPos = transform.position;
+        } else if (lastPos.y < transform.position.y) {
+            slideTimer -= .1f;
+            lastPos = transform.position;
+        }
 
         slideTimer -= Time.deltaTime;
 
