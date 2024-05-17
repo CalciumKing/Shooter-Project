@@ -4,7 +4,7 @@ public class GasTank : MonoBehaviour {
     protected PlayerStats ps;
     [SerializeField] int damageAmount, damageDistance;
     public bool exploded = false;
-    [SerializeField] ParticleSystem explosion;
+    [SerializeField] protected ParticleSystem explosionPrefab;
     [SerializeField] DamagePopup damagePopupPrefab;
 
     private void Start() { ps = GameManager.i.ps; }
@@ -29,20 +29,17 @@ public class GasTank : MonoBehaviour {
         }
 
         foreach (GasTank tank in gasTanks)
-            if (Vector3.Distance(tank.transform.position, transform.position) <= damageDistance)
-                if (!tank.exploded)
-                    tank.Explode(false);
+            if (Vector3.Distance(tank.transform.position, transform.position) <= damageDistance && !tank.exploded)
+                tank.Explode(false);
         foreach (Grenade grenade in grenades) {
-            if (Vector3.Distance(grenade.transform.position, transform.position) <= damageDistance) {
-                if (!grenade.exploded) {
-                    grenade.timer = .1f;
-                    grenade.Explode(true);
-                }
+            if (Vector3.Distance(grenade.transform.position, transform.position) <= damageDistance && !grenade.exploded) {
+                grenade.timer = .1f;
+                grenade.Explode(true);
             }
         }
 
         if (!destroyAfter) {
-            explosion.Play();
+            explosionPrefab.Play();
             gameObject.SetActive(false);
         } else
             Destroy(gameObject);

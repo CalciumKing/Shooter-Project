@@ -36,8 +36,7 @@ public class Bullet : MonoBehaviour {
                 other.gameObject.GetComponent<GasTank>().Explode(false);
                 break;
             case "Grenade":
-                Grenade grenade = other.gameObject.GetComponent<Grenade>();
-                grenade.timer = .1f;
+                other.gameObject.GetComponent<Grenade>().timer = .1f;
                 break;
         }
 

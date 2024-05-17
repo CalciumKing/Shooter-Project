@@ -11,6 +11,14 @@ public class PlayerMovement : MonoBehaviour {
     public float horizontalInput, verticalInput;
     private Vector3 moveDirection;
 
+    [Header("Sounds")]
+    public AudioSource walkingSound;
+    private bool walkingSoundPlaying;
+    [SerializeField] AudioSource landingSound;
+    private bool landingSoundPlayed;
+    private bool groundBelow;
+    [SerializeField] AudioSource jumpSound;
+
     [Header("Jumping")]
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] float airMultiplier, jumpForce;
@@ -78,15 +86,27 @@ public class PlayerMovement : MonoBehaviour {
         } else if (Input.GetKeyUp(k.crouch) && crouched)
             crouched = false;
 
-        if (crouched && grounded && !s.sliding)
+        if (crouched && grounded && !s.sliding) {
             moveSpeed = crouchSpeed;
-        else if (!crouched && grounded && !s.sliding) {
+            walkingSound.pitch = .25f;
+        }
+        else if (!crouched && grounded && !s.sliding)
+        {
             if (Input.GetKey(KeyCode.LeftShift))
+            {
                 moveSpeed = runSpeed;
+                walkingSound.pitch = 0.75f;
+            }
             else
+            {
                 moveSpeed = walkSpeed;
-        } else if (wallRunning) {
+                walkingSound.pitch = 0.5f;
+            }
+        }
+        else if (wallRunning)
+        {
             moveSpeed = wallRunSpeed;
+            walkingSound.pitch = 1;
             fallTime = 0;
         }
 
@@ -94,11 +114,22 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void DragController() {
-        if (grounded)
+        if (grounded) {
             rb.drag = groundDrag;
-        else {
+            groundBelow = Physics.Raycast(transform.position, -orientation.up, 2, whatIsGround);
+            if (groundBelow && landingSoundPlayed == false)
+            {
+                landingSound.Play();
+                landingSoundPlayed = true;
+                walkingSoundPlaying = false;
+            }
+        }
+        else
+        {
+            landingSoundPlayed = false;
             rb.drag = 0;
-            if (Input.GetKey(k.crouch) && !crouchInAir) {
+            if (Input.GetKey(k.crouch) && !crouchInAir)
+            {
                 rb.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
                 crouchInAir = true;
             }
@@ -117,21 +148,30 @@ public class PlayerMovement : MonoBehaviour {
         if (grounded) {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
+            if (!walkingSoundPlaying && (verticalInput != 0 || horizontalInput != 0)) {
+                walkingSound.Play();
+                walkingSoundPlaying = true;
+            } else if (walkingSoundPlaying && verticalInput == 0 && horizontalInput == 0) {
+                walkingSound.Stop();
+                walkingSoundPlaying = false;
+            }
+
             hasDoubleJumped = false;
             crouchInAir = false;
 
             endJump = transform.position;
-            if (fallTime >= 2.5f)
-                if (startJump.y - endJump.y >= 7)
-                    ps.currentHealth -= (int)fallTime * fallDamageMultiplier;
+            if (fallTime >= 2.5f && startJump.y - endJump.y >= 7)
+                ps.currentHealth -= (int)fallTime * fallDamageMultiplier;
             fallTime = 0;
         } else if (!grounded) {
+            walkingSound.Stop();
             fallTime += Time.deltaTime;
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
     }
 
     public void Jump() {
+        jumpSound.Play();
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         if (!wr.playerFlipped)
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);

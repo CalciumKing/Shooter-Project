@@ -7,6 +7,9 @@ using System;
 public class Screens : MonoBehaviour {
     private PlayerStats ps;
     private OtherKeys ok;
+    private PlayerMovement pm;
+    [SerializeField] AudioSource gameOver;
+    private bool soundPlayed;
 
     [Header("Screens")]
     [SerializeField] GameObject loseScreen;
@@ -26,6 +29,7 @@ public class Screens : MonoBehaviour {
     private void Start() {
         ps = GameManager.i.ps;
         ok = player.GetComponent<OtherKeys>();
+        pm = FindObjectOfType<PlayerMovement>();
         loseScreen.SetActive(false);
         pauseScreen.SetActive(false);
         winScreen.SetActive(false);
@@ -63,6 +67,7 @@ public class Screens : MonoBehaviour {
         timer = 0;
         playerSpawnPos.position = Vector3.zero;
         ps.spawnPos = Vector3.zero;
+        pm.hasDoubleJumped = false;
         Respawn();
     }
     public void Pause() {
@@ -76,12 +81,18 @@ public class Screens : MonoBehaviour {
     public void Death() {
         loseScreen.SetActive(true);
         MenuSettings(true);
+        if(!soundPlayed)
+        {
+            gameOver.Play();
+            soundPlayed = true;
+        }
     }
     public void Respawn() {
         player.position = playerSpawnPos.position;
         ps.currentHealth = ps.maxHealth;
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
+        soundPlayed = false;
         ok.Respawn();
 
         foreach (GunStats weapon in weapons)
@@ -96,6 +107,7 @@ public class Screens : MonoBehaviour {
         GasTankSpawner[] gasTankSpawners = FindObjectsOfType<GasTankSpawner>();
         foreach (GasTankSpawner tank in gasTankSpawners) {
             tank.gasTank.SetActive(false);
+            tank.soundPlayed = true;
             tank.timer = 0;
         }
 

@@ -3,7 +3,9 @@ using UnityEngine;
 public class Grenade : GasTank {
     public float timer;
     [SerializeField] float cooldown = 5f;
-    [SerializeField] ParticleSystem explosionPrefab, explosionInstance;
+    [SerializeField] ParticleSystem explosionInstance;
+    [SerializeField] AudioSource explosionSound;
+    private bool soundPlayed;
 
     private void Start() {
         ps = GameManager.i.ps;
@@ -16,11 +18,18 @@ public class Grenade : GasTank {
             Explode(true);
 
         if (timer > 0 && timer <= .1f)
+        {
+            if (!soundPlayed)
+            {
+                explosionSound.Play();
+                soundPlayed = true;
+            }
             ExplodeEffect();
+        }
     }
 
     public void ExplodeEffect() {
-        explosionInstance = Instantiate(explosionPrefab, transform.position, Quaternion.identity, transform);
+        explosionInstance = Instantiate(base.explosionPrefab, transform.position, Quaternion.identity, transform);
         explosionInstance.Play();
     }
 }

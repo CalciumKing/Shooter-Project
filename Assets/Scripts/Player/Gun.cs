@@ -9,6 +9,7 @@ public class Gun : MonoBehaviour {
     [SerializeField] GameObject bullet;
     [SerializeField] Transform muzzlePos;
     [SerializeField] ParticleSystem muzzleFlash;
+    private AudioSource gunShot;
 
     [Header("Shooting")]
     [SerializeField] float cooldown;
@@ -22,6 +23,7 @@ public class Gun : MonoBehaviour {
         k = GameManager.i.k;
         timer = cooldown;
         s = FindObjectOfType<Screens>();
+        gunShot = GetComponent<AudioSource>();
     }
     private void Update() {
         if (!s.stopped) {
@@ -44,6 +46,7 @@ public class Gun : MonoBehaviour {
                                 Instantiate(bullet, muzzlePos.position, pelletRot * bullet.transform.localRotation);
                             }
                         }
+                        gunShot.Play();
                         muzzleFlash.Play();
                         gs.currentAmmo--;
                         canShoot = false;
@@ -61,6 +64,7 @@ public class Gun : MonoBehaviour {
                     if (bullet.GetComponent<Bullet>().damage != 10)
                         bullet.GetComponent<Bullet>().damage = 10;
                     Instantiate(bullet, muzzlePos.position, transform.rotation * bullet.transform.localRotation);
+                    gunShot.Play();
                     muzzleFlash.Play();
                     gs.currentAmmo--;
                 }

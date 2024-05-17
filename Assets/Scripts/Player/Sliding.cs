@@ -10,6 +10,7 @@ public class Sliding : MonoBehaviour {
     public Transform playerObj;
     private Rigidbody rb;
     private PlayerMovement pm;
+    [SerializeField] AudioSource slidingSound;
 
     [Header("Sliding")]
     public bool sliding;
@@ -43,6 +44,7 @@ public class Sliding : MonoBehaviour {
         sliding = true;
         slideTimer = slideMaxTime;
         lastPos = transform.position;
+        slidingSound.Play();
     }
     private void SlidingMovement() {
         Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
