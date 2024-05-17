@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour {
     [Header("References")]
-    [SerializeField] PlayerStats ps;
+    private PlayerStats ps;
     [SerializeField] Screens s;
     private Image image;
     private int currentHealth;
     [SerializeField] TextMeshProUGUI text;
+    [SerializeField] AudioSource healSound;
+    [SerializeField] AudioSource damageSound;
 
     [Header("Health Animations")]
     [SerializeField] Image[] screens;
@@ -19,15 +21,22 @@ public class Health : MonoBehaviour {
 
     private void Awake() { image = GetComponent<Image>(); }
     private void Start() {
+        ps = GameManager.i.ps;
         image.color = healthGradient.Evaluate(targetHealth);
         targetColor = healthGradient.Evaluate(targetHealth);
     }
     private void Update() {
         if (currentHealth != ps.currentHealth) {
             if (currentHealth > ps.currentHealth)
+            {
                 screens[0].gameObject.SetActive(true);
+                damageSound.Play();
+            }
             else if (currentHealth < ps.currentHealth)
+            {
                 screens[1].gameObject.SetActive(true);
+                healSound.Play();
+            }
 
             UpdateHealthBar(ps.maxHealth, ps.currentHealth);
             currentHealth = ps.currentHealth;

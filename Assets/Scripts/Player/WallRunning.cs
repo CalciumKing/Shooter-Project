@@ -6,6 +6,7 @@ public class WallRunning : MonoBehaviour {
     private Rigidbody rb;
     private PlayerCam mc;
     [SerializeField] Transform cameraHolder;
+    [SerializeField] AudioSource wallRunSound;
 
     [Header("Wallrunning")]
     [SerializeField] float wallRunForce;
@@ -77,7 +78,10 @@ public class WallRunning : MonoBehaviour {
 
     private void StartWallRun() {
         if (!pm.wallRunning)
+        {
             pm.wallRunning = true;
+            wallRunSound.Play();
+        }
     }
     private void WallRunningMovement() {
         rb.useGravity = false;
@@ -101,6 +105,7 @@ public class WallRunning : MonoBehaviour {
         pm.wallRunning = false;
         rb.useGravity = true;
         mc.Tilt(0);
+        wallRunSound.Stop();
     }
 
     public void ResetPlayerCeilingRunning() {
