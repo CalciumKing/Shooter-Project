@@ -6,12 +6,12 @@ public class WallRunning : MonoBehaviour {
     private Rigidbody rb;
     private PlayerCam mc;
     [SerializeField] Transform cameraHolder;
-    [SerializeField] AudioSource wallRunSound;
 
     [Header("Wallrunning")]
     [SerializeField] float wallRunForce;
     [SerializeField] LayerMask whatIsWall, whatIsGround;
     [SerializeField] float timer, cooldown;
+    private bool soundPlaying;
 
     [Header("Detection")]
     public bool playerFlipped = false;
@@ -77,13 +77,15 @@ public class WallRunning : MonoBehaviour {
     }
 
     private void StartWallRun() {
+        SoundManager.i.landing.Play();
         if (!pm.wallRunning)
-        {
             pm.wallRunning = true;
-            wallRunSound.Play();
-        }
     }
     private void WallRunningMovement() {
+        if (!soundPlaying) {
+            SoundManager.i.walking.Play();
+            soundPlaying = true;
+        }
         rb.useGravity = false;
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
@@ -102,10 +104,10 @@ public class WallRunning : MonoBehaviour {
 
     }
     private void StopWallRun() {
+        SoundManager.i.walking.Stop();
         pm.wallRunning = false;
         rb.useGravity = true;
         mc.Tilt(0);
-        wallRunSound.Stop();
     }
 
     public void ResetPlayerCeilingRunning() {

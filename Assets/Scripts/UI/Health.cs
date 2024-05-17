@@ -10,32 +10,31 @@ public class Health : MonoBehaviour {
     private Image image;
     private int currentHealth;
     [SerializeField] TextMeshProUGUI text;
-    [SerializeField] AudioSource healSound;
-    [SerializeField] AudioSource damageSound;
+    private AudioSource healSound;
+    private AudioSource damageSound;
 
     [Header("Health Animations")]
-    [SerializeField] Image[] screens;
-    [SerializeField] Gradient healthGradient;
+    public Image[] screens;
+    public Gradient healthGradient;
     private Color targetColor;
     private float timeToDrain = .25f, targetHealth = 1;
 
     private void Awake() { image = GetComponent<Image>(); }
     private void Start() {
         ps = GameManager.i.ps;
+        healSound = SoundManager.i.heal;
+        damageSound = SoundManager.i.damage;
         image.color = healthGradient.Evaluate(targetHealth);
         targetColor = healthGradient.Evaluate(targetHealth);
     }
     private void Update() {
         if (currentHealth != ps.currentHealth) {
-            if (currentHealth > ps.currentHealth)
-            {
-                screens[0].gameObject.SetActive(true);
+            if (currentHealth > ps.currentHealth) {
                 damageSound.Play();
-            }
-            else if (currentHealth < ps.currentHealth)
-            {
-                screens[1].gameObject.SetActive(true);
+                screens[0].gameObject.SetActive(true);
+            } else if (currentHealth < ps.currentHealth) {
                 healSound.Play();
+                screens[1].gameObject.SetActive(true);
             }
 
             UpdateHealthBar(ps.maxHealth, ps.currentHealth);

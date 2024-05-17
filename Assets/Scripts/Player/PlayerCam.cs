@@ -4,7 +4,7 @@ public class PlayerCam : MonoBehaviour {
     private Keys k;
     private Camera mc;
     private Screens s;
-    [SerializeField] WallRunning wr;
+    private WallRunning wr;
 
     [Header("Transforms")]
     public Transform orientation;
@@ -12,7 +12,7 @@ public class PlayerCam : MonoBehaviour {
     public Transform weaponHolder;
 
     private float xRotation, yRotation;
-    private int xLookSense, yLookSense;
+    public int xLookSense, yLookSense;
 
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -21,6 +21,7 @@ public class PlayerCam : MonoBehaviour {
         k = GameManager.i.k;
         xLookSense = k.xSense;
         yLookSense = k.ySense;
+        wr = FindObjectOfType<WallRunning>();
         s = FindObjectOfType<Screens>();
     }
 

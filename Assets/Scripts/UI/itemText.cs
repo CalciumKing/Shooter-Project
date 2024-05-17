@@ -17,6 +17,7 @@ public class itemText : MonoBehaviour {
         if (text.gameObject.activeInHierarchy) {
             text.transform.LookAt(player);
             if (Input.GetKeyDown(KeyCode.E)) {
+                SoundManager.i.saved.Play();
                 Vector3 pos = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z + 1);
                 spawnPos.position = pos;
                 ps.spawnPos = pos;

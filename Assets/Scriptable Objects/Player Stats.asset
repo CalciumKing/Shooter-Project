@@ -15,10 +15,10 @@ MonoBehaviour:
   currentWeapon: {fileID: 8380769455003715722, guid: 82ad33fdf0174154aa5dd2102a4c0573, type: 3}
   currentInsta: {fileID: 0}
   currentGunKey: 49
-  xp: 60
-  levelInterval: 400
-  level: 7
-  currentHealth: 60
+  xp: 30
+  levelInterval: 100
+  level: 6
+  currentHealth: 100
   maxHealth: 100
-  spawnPos: {x: -0.24673843, y: 16.479643, z: 173.62512}
-  bestTime: 999
+  spawnPos: {x: 0, y: 0, z: 0}
+  bestTime: 500

@@ -74,6 +74,7 @@ public class OtherKeys : MonoBehaviour {
                     GameObject proj = Instantiate(throwItem, throwPos.position, Quaternion.identity);
                     proj.GetComponent<Rigidbody>().AddForce(cam.transform.forward * throwForce, ForceMode.Impulse);
                     canThrow = false;
+                    SoundManager.i.throwGrenade.Play();
                 }
             } else {
                 if (throwTimer > 0) {

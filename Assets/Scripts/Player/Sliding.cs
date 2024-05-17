@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Sliding : MonoBehaviour {
@@ -10,16 +8,16 @@ public class Sliding : MonoBehaviour {
     public Transform playerObj;
     private Rigidbody rb;
     private PlayerMovement pm;
-    [SerializeField] AudioSource slidingSound;
+    private AudioSource slidingSound;
 
     [Header("Sliding")]
     public bool sliding;
     [SerializeField] float slideForce, slideTimer, slideMaxTime;
     [SerializeField] Vector3 lastPos;
-    
     private float horizontalInput, verticalInput;
 
     private void Awake() {
+        slidingSound = SoundManager.i.sliding;
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
     }

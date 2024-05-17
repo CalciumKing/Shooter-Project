@@ -12,9 +12,8 @@ public class Gun : MonoBehaviour {
     private AudioSource gunShot;
 
     [Header("Shooting")]
-    [SerializeField] float cooldown;
-    [SerializeField] float timer;
     [SerializeField] bool canShoot = true;
+    [SerializeField] float cooldown, timer;
     [SerializeField] bool usingPistol = false, usingShotgun = false;
     [SerializeField] float spread = .1f;
     [SerializeField] int numPellets;
@@ -70,8 +69,10 @@ public class Gun : MonoBehaviour {
                 }
             }
 
-            if (Input.GetKeyDown(k.reload) && gs.currentAmmo != gs.maxAmmo)
+            if (Input.GetKeyDown(k.reload) && gs.currentAmmo != gs.maxAmmo) {
+                SoundManager.i.reload.Play();
                 gs.currentAmmo = gs.maxAmmo;
+            }
         }
     }
 }

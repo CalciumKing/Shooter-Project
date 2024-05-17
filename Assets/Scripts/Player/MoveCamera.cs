@@ -4,9 +4,7 @@ public class MoveCamera : MonoBehaviour {
     private Keys k;
     [SerializeField] Transform cameraPosition;
 
-    private void Start() {
-        k = GameManager.i.k;
-    }
+    private void Start() { k = GameManager.i.k; }
     private void Update() {
         transform.position = cameraPosition.position;
         if (Input.GetKeyDown(k.crouch))

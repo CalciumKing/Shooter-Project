@@ -3,7 +3,7 @@ using UnityEngine;
 public class GasTankSpawner : MonoBehaviour {
     public GameObject gasTank;
     [SerializeField] Transform gasSpawnPos;
-    [SerializeField] AudioSource explosionSound;
+    protected AudioSource explosionSound;
     public bool soundPlayed;
 
     [Header("Timer")]
@@ -12,9 +12,8 @@ public class GasTankSpawner : MonoBehaviour {
 
     private void Update() {
         if (!gasTank.activeInHierarchy) {
-            if (!soundPlayed)
-            {
-                explosionSound.Play();
+            if (!soundPlayed) {
+                SoundManager.i.explosion.Play();
                 soundPlayed = true;
             }
 

@@ -608,7 +608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9204023048446131512
 Transform:
   m_ObjectHideFlags: 0
@@ -617,9 +617,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8426396110273374082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 127.7, y: -3.34, z: -68.3}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2176995467886709963}
   - {fileID: 5484542814181673762}
@@ -647,12 +647,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gs: {fileID: 11400000, guid: e49a66e3fb1ee5248ba6be49428edfef, type: 2}
   bullet: {fileID: 101766323439612992, guid: cd709f568ba51c148856dc379eadb03e, type: 3}
+  muzzlePos: {fileID: 0}
+  muzzleFlash: {fileID: 0}
+  canShoot: 1
   cooldown: 0.1
   timer: 0.1
-  canShoot: 1
   usingPistol: 0
-  reloadKey: 114
-  fireKey: 323
+  usingShotgun: 0
+  spread: 0.1
+  numPellets: 0
 --- !u!1001 &64331305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -667,6 +670,10 @@ PrefabInstance:
     - target: {fileID: 3524295934362598614, guid: f1934d0715948b54d83e420685e0d87b, type: 3}
       propertyPath: m_Name
       value: SM_Butt_Of_The_Rifle_For_Special_Submachine_Gun_Clean
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524295934362598614, guid: f1934d0715948b54d83e420685e0d87b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4297279389801473644, guid: f1934d0715948b54d83e420685e0d87b, type: 3}
       propertyPath: m_RootOrder

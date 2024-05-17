@@ -12,12 +12,9 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 moveDirection;
 
     [Header("Sounds")]
-    public AudioSource walkingSound;
-    private bool walkingSoundPlaying;
-    [SerializeField] AudioSource landingSound;
-    private bool landingSoundPlayed;
     private bool groundBelow;
-    [SerializeField] AudioSource jumpSound;
+    private AudioSource walkingSound, landingSound, jumpSound;
+    private bool walkingSoundPlaying, landingSoundPlayed;
 
     [Header("Jumping")]
     [SerializeField] LayerMask whatIsGround;
@@ -37,6 +34,9 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] float wallRunSpeed, crouchSpeed, walkSpeed;
 
     private void Awake() {
+        walkingSound = SoundManager.i.walking;
+        landingSound = SoundManager.i.landing;
+        jumpSound = SoundManager.i.jump;
         rb = GetComponent<Rigidbody>();
         s = GetComponent<Sliding>();
         wr = GetComponent<WallRunning>();
@@ -89,22 +89,15 @@ public class PlayerMovement : MonoBehaviour {
         if (crouched && grounded && !s.sliding) {
             moveSpeed = crouchSpeed;
             walkingSound.pitch = .25f;
-        }
-        else if (!crouched && grounded && !s.sliding)
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
+        } else if (!crouched && grounded && !s.sliding) {
+            if (Input.GetKey(KeyCode.LeftShift)) {
                 moveSpeed = runSpeed;
                 walkingSound.pitch = 0.75f;
-            }
-            else
-            {
+            } else {
                 moveSpeed = walkSpeed;
                 walkingSound.pitch = 0.5f;
             }
-        }
-        else if (wallRunning)
-        {
+        } else if (wallRunning) {
             moveSpeed = wallRunSpeed;
             walkingSound.pitch = 1;
             fallTime = 0;
@@ -117,19 +110,15 @@ public class PlayerMovement : MonoBehaviour {
         if (grounded) {
             rb.drag = groundDrag;
             groundBelow = Physics.Raycast(transform.position, -orientation.up, 2, whatIsGround);
-            if (groundBelow && landingSoundPlayed == false)
-            {
+            if (groundBelow && landingSoundPlayed == false) {
                 landingSound.Play();
                 landingSoundPlayed = true;
                 walkingSoundPlaying = false;
             }
-        }
-        else
-        {
+        } else {
             landingSoundPlayed = false;
             rb.drag = 0;
-            if (Input.GetKey(k.crouch) && !crouchInAir)
-            {
+            if (Input.GetKey(k.crouch) && !crouchInAir) {
                 rb.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
                 crouchInAir = true;
             }

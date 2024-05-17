@@ -1,15 +1,17 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.Collections;
 using System;
 
 public class Screens : MonoBehaviour {
     private PlayerStats ps;
     private OtherKeys ok;
     private PlayerMovement pm;
-    [SerializeField] AudioSource gameOver;
+
+    [Header("Sounds")]
+    private AudioSource click;
     private bool soundPlayed;
+    private AudioSource gameOver;
 
     [Header("Screens")]
     [SerializeField] GameObject loseScreen;
@@ -28,6 +30,8 @@ public class Screens : MonoBehaviour {
 
     private void Start() {
         ps = GameManager.i.ps;
+        click = SoundManager.i.click;
+        gameOver = SoundManager.i.gameOver;
         ok = player.GetComponent<OtherKeys>();
         pm = FindObjectOfType<PlayerMovement>();
         loseScreen.SetActive(false);
@@ -36,12 +40,15 @@ public class Screens : MonoBehaviour {
     }
     private void Update() {
         timer += Time.deltaTime;
+        if (timer < 0)
+            timer = 0;
 
         timerText.text = String.Format("{0:0.00}", timer);
         bestText.text = "Best: " + String.Format("{0:0.00}", ps.bestTime);
     }
 
     public void MenuSettings(bool screenOn) {
+        click.Play();
         if (!screenOn) {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
@@ -58,12 +65,15 @@ public class Screens : MonoBehaviour {
         }
     }
     public void Quit() {
+        click.Play();
         Application.Quit();
     }
     public void ChangeLevel() {
         SceneManager.LoadScene("SampleScene");
     }
     public void Restart() {
+        SoundManager.i.victory.Stop();
+        click.Play();
         timer = 0;
         playerSpawnPos.position = Vector3.zero;
         ps.spawnPos = Vector3.zero;
@@ -79,21 +89,34 @@ public class Screens : MonoBehaviour {
         MenuSettings(false);
     }
     public void Death() {
-        loseScreen.SetActive(true);
-        MenuSettings(true);
-        if(!soundPlayed)
-        {
+        if (!soundPlayed) {
+            loseScreen.SetActive(true);
+            MenuSettings(true);
+            click.Stop();
             gameOver.Play();
             soundPlayed = true;
         }
     }
     public void Respawn() {
+        click.Play();
         player.position = playerSpawnPos.position;
         ps.currentHealth = ps.maxHealth;
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         soundPlayed = false;
         ok.Respawn();
+
+        Camera mc = Camera.main;
+        
+        if (mc.fieldOfView != 60) {
+            mc.fieldOfView = 60;
+            Keys k = GameManager.i.k;
+            PlayerCam pc = FindObjectOfType<PlayerCam>();
+            pc.xLookSense = k.xSense;
+            pc.yLookSense = k.ySense;
+            pc.weaponHolder.transform.position = new Vector3(0.4f, -0.2f, 0.5f);
+        }
+        
 
         foreach (GunStats weapon in weapons)
             weapon.currentAmmo = weapon.maxAmmo;

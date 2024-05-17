@@ -4,11 +4,12 @@ public class Grenade : GasTank {
     public float timer;
     [SerializeField] float cooldown = 5f;
     [SerializeField] ParticleSystem explosionInstance;
-    [SerializeField] AudioSource explosionSound;
+    private AudioSource explosionSound;
     private bool soundPlayed;
 
     private void Start() {
         ps = GameManager.i.ps;
+        explosionSound = SoundManager.i.explosion;
         timer = cooldown;
     }
     private void Update() {
@@ -17,10 +18,8 @@ public class Grenade : GasTank {
         else
             Explode(true);
 
-        if (timer > 0 && timer <= .1f)
-        {
-            if (!soundPlayed)
-            {
+        if (timer > 0 && timer <= .1f) {
+            if (!soundPlayed) {
                 explosionSound.Play();
                 soundPlayed = true;
             }

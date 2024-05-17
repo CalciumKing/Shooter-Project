@@ -21,7 +21,7 @@ public class XP : MonoBehaviour {
 
         if (ps.xp >= ps.levelInterval) {
             ps.xp -= ps.levelInterval;
-            ps.levelInterval += 50;
+            ps.levelInterval += 10;
             ps.level++;
         }
 

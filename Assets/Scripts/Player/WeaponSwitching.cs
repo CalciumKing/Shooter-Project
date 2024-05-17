@@ -15,7 +15,7 @@ public class WeaponSwitching : MonoBehaviour {
         ps.currentInsta = Instantiate(ps.currentWeapon, weaponHolder.position, weaponHolder.rotation, weaponHolder);
     }
     private void Update() {
-        if(!s.stopped) {
+        if (!s.stopped) {
             if (Input.mouseScrollDelta.y == 0) {
                 foreach (KeyCode key in Enum.GetValues(typeof(KeyCode))) {
                     if (Input.GetKey(key) && key != ps.currentGunKey && key >= k.slot1 && key <= k.slot3) {
