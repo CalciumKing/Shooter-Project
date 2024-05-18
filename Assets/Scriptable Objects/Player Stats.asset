@@ -21,4 +21,4 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   spawnPos: {x: 0, y: 0, z: 0}
-  bestTime: 500
+  bestTime: 1000

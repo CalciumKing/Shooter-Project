@@ -34,9 +34,6 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] float wallRunSpeed, crouchSpeed, walkSpeed;
 
     private void Awake() {
-        walkingSound = SoundManager.i.walking;
-        landingSound = SoundManager.i.landing;
-        jumpSound = SoundManager.i.jump;
         rb = GetComponent<Rigidbody>();
         s = GetComponent<Sliding>();
         wr = GetComponent<WallRunning>();
@@ -45,6 +42,9 @@ public class PlayerMovement : MonoBehaviour {
         Physics.gravity = new Vector3(0, -10, 0);
         ps = GameManager.i.ps;
         k = GameManager.i.k;
+        walkingSound = SoundManager.i.walking;
+        landingSound = SoundManager.i.landing;
+        jumpSound = SoundManager.i.jump;
         moveSpeed = walkSpeed;
         readyToJump = true;
         transform.position = ps.spawnPos;

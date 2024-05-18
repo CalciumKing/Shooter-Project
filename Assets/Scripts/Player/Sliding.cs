@@ -17,12 +17,12 @@ public class Sliding : MonoBehaviour {
     private float horizontalInput, verticalInput;
 
     private void Awake() {
-        slidingSound = SoundManager.i.sliding;
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
     }
     private void Start() {
         k = GameManager.i.k;
+        slidingSound = SoundManager.i.sliding;
     }
     private void Update() {
         horizontalInput = Input.GetAxisRaw("Horizontal");
